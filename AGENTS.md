@@ -15,11 +15,12 @@ At the beginning of each session:
 
 ## Current scope and approval
 
-- Active scope is **Milestone 0 only**: research, requirements, architecture
-  recommendations, and feasibility/test plans. There is no application code.
-- Do not write application source or proceed to Milestone 1 until the owner
-  explicitly approves. Architecture proposals and numerical test gates remain
-  provisional until reviewed; ask about significant architectural changes.
+- The owner explicitly approved proceeding on 2026-10-27. Active scope is
+  **Milestone 1: native camera preview and hand tracking with diagnostics**.
+- Implement only capture, two-hand/finger observations, confidence/handedness,
+  preview/overlay and frame/resource diagnostics. No strike recognition, MIDI,
+  sampler, plugin, microphone or recordings. Milestone 2 needs new approval after
+  target-Mac tracking acceptance. Ask about significant architectural changes.
 - Owner reports a 2020 M1 MacBook Pro, 8 GB, macOS 26.5.2, Logic Pro 10.7.2,
   Xcode 26.6, and iPhone 17 Pro on iOS 26.6.2 with an original data cable.
   Installation/SDK and native compatibility still need verification on the Mac.
