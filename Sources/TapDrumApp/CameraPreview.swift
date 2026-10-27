@@ -10,6 +10,8 @@ struct CameraPreview: NSViewRepresentable {
     let mirrored: Bool
     let minimumConfidence: Double
     let showFingerLabels: Bool
+    let playingArea: PlayingAreaCalibration
+    let onCalibrationPoint: @MainActor (NormalizedPoint?) -> Void
 
     func makeNSView(context: Context) -> PreviewView { PreviewView(session: session) }
 
@@ -18,6 +20,8 @@ struct CameraPreview: NSViewRepresentable {
         view.mirrored = mirrored
         view.minimumConfidence = minimumConfidence
         view.showFingerLabels = showFingerLabels
+        view.playingArea = playingArea
+        view.onCalibrationPoint = onCalibrationPoint
         view.needsLayout = true
     }
 }
@@ -29,6 +33,8 @@ final class PreviewView: NSView {
     var mirrored = false
     var minimumConfidence = 0.3
     var showFingerLabels = true
+    var playingArea = PlayingAreaCalibration()
+    var onCalibrationPoint: (@MainActor (NormalizedPoint?) -> Void)?
     private var projection: PreviewProjection?
     private var effectiveMirroring = false
 
@@ -54,6 +60,7 @@ final class PreviewView: NSView {
         CATransaction.setDisableActions(true)
         previewLayer.frame = bounds
         overlay.frame = bounds
+        effectiveMirroring = false
         if let connection = previewLayer.connection {
             if connection.isVideoRotationAngleSupported(0) { connection.videoRotationAngle = 0 }
             if connection.isVideoMirroringSupported {
@@ -69,12 +76,56 @@ final class PreviewView: NSView {
         CATransaction.commit()
     }
 
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool { playingArea.isSelecting }
+
+    override func mouseDown(with event: NSEvent) {
+        guard playingArea.isSelecting else { super.mouseDown(with: event); return }
+        layoutSubtreeIfNeeded()
+        let local = convert(event.locationInWindow, from: nil)
+        let point = projection?.unproject(x: local.x, y: local.y, mirrored: effectiveMirroring)
+        onCalibrationPoint?(point)
+    }
+
     private func drawOverlay() {
         overlay.sublayers?.forEach { $0.removeFromSuperlayer() }
         guard let projection else { return }
         func layerPoint(_ point: NormalizedPoint) -> CGPoint {
             let p = projection.project(point, mirrored: effectiveMirroring)
             return CGPoint(x: p.x, y: p.y)
+        }
+        let corners = playingArea.area?.corners ?? playingArea.draft
+        if let first = corners.first {
+            let path = CGMutablePath()
+            path.move(to: layerPoint(first))
+            for corner in corners.dropFirst() { path.addLine(to: layerPoint(corner)) }
+            if playingArea.area != nil { path.closeSubpath() }
+            let shape = CAShapeLayer()
+            shape.path = path
+            shape.strokeColor = NSColor.systemBlue.cgColor
+            shape.fillColor = playingArea.area == nil ? NSColor.clear.cgColor : NSColor.systemBlue.withAlphaComponent(0.06).cgColor
+            shape.lineWidth = 2
+            if playingArea.isSelecting { shape.lineDashPattern = [6, 4] }
+            overlay.addSublayer(shape)
+            for (index, corner) in corners.enumerated() {
+                let position = layerPoint(corner)
+                addLabel("\(index + 1)", at: position, color: .systemBlue, width: 22)
+            }
+            if let area = playingArea.area {
+                let grid = CGMutablePath()
+                let midlines = [(NormalizedPoint(x: 0.5, y: 0)!, NormalizedPoint(x: 0.5, y: 1)!),
+                                (NormalizedPoint(x: 0, y: 0.5)!, NormalizedPoint(x: 1, y: 0.5)!)]
+                for (start, end) in midlines {
+                    guard let a = area.imagePoint(at: start), let b = area.imagePoint(at: end) else { continue }
+                    grid.move(to: layerPoint(a))
+                    grid.addLine(to: layerPoint(b))
+                }
+                let gridLayer = CAShapeLayer()
+                gridLayer.path = grid
+                gridLayer.strokeColor = NSColor.systemBlue.withAlphaComponent(0.7).cgColor
+                gridLayer.lineWidth = 1
+                gridLayer.fillColor = NSColor.clear.cgColor
+                overlay.addSublayer(gridLayer)
+            }
         }
         for hand in hands {
             let color: NSColor = hand.handedness == .left ? .systemGreen : hand.handedness == .right ? .systemOrange : .white

@@ -28,7 +28,9 @@ rejected. Do not turn a recommendation into an approved architectural decision.
 | D-021 | 2026-10-27 | Owner trial preference / evidence boundary | Owner supplied an M1 trial recording, prefers that fixed camera angle and reports overlay cutoff 0.72. Requests necessary corrections/calibration and further progress. Recording exceeds 32 MiB and is unviewed; preserve preferences without fabricating findings or skipping validation. Supplied-clip review does not authorize automatic app recording |
 | D-022 | 2026-10-27 | Reviewed evidence / correction | Replacement clip is accessible: one-hand iPhone 720p/30 preview has vertically reflected overlay. Use tested lower-left image-rectangle projection, preserve mirroring/letterboxing and raw Vision observations. Native fix needs owner validation; full two-hand/contact accuracy not established |
 | D-023 | 2026-10-27 | Owner clarification | Resolution reduction was an optional suggestion. Accuracy, frame rate, calibration and low latency take priority. Keep 720p/30 baseline; no new resolution shortcut, inference throttle or smoothing. Existing native mode picker remains available for controlled future experiments |
+| D-024 | 2026-10-27 | Authorized bounded calibration step | Owner explicitly requested necessary accuracy corrections/calibrations and further progress after M1 trial. Implement four-corner projected playing area with perspective mapping/reset, while M1 projection retest remains open. This is M2 foundation, not acceptance of contact recognition or permission to skip gates into MIDI |
+| D-025 | 2026-10-27 | Calibration contract | Store four image references in memory for one capture run. Reset on capture changes/stalls; retain through mirror/resize; manual reset after camera movement. No raw histories, footage, model additions, physical height/contact claims or musical output |
 
-Milestone 1 implementation is authorized. Target-Mac acceptance and approval to
-advance beyond tracking remain required. No milestone acceptance is inferred from
-implementation authorization.
+M1 fixes and the bounded playing-area step are authorized. Target-Mac alignment,
+area interaction and then strike feasibility need evidence before advancing.
+No milestone acceptance is inferred from implementation authorization.

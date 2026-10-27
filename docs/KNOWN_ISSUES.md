@@ -9,12 +9,12 @@ full tracking/contact acceptance.
 | --- | --- | --- |
 | K-01 | Research risk | Monocular contact/hover separation unproven; run controlled S1 only after M1 and approval |
 | K-02 | Performance risk | Camera transport and reversal confirmation may exceed latency goals; measure rather than promise |
-| K-03 | Hardware prerequisite | Version/cable reports retained; build log confirms Xcode 26.6 build 17F113, Swift 6.3.3 and SDK 26.5. Mount/angle, successful native build and capture/Logic operation still unverified |
+| K-03 | Hardware prerequisite | Xcode/compiler/SDK evidenced; original iPhone runtime and fixed oblique view now seen. Updated native build, mount stability, camera transport and Logic operation remain unverified |
 | K-04 | Environment limitation | Cloud is Linux without Apple SDKs/Logic/cameras; native compatibility and hardware validation require Mac |
 | K-05 | Research access | Initial Apple block resolved in subsequent requests; official Google guide still blocked. Apple APIs and MediaPipe primary source reviewed; draft settings saved, publication not performed |
 | K-06 | Privacy/measurement constraint | Camera-only/no-recordings chosen. Precise event truth and contact→audible latency lack an approved independent measurement method; do not claim them verified |
 | K-07 | Tracking risk | Occluded tips, coupled fingers, palm proxy and hand-ID swaps unresolved; score all contacts separately |
-| K-08 | Approval gate | M1 direction/implementation approved; macOS 14 floor chosen. Native acceptance pending; no M2 authorization or merge approval |
+| K-08 | Approval gate | M1 corrections and bounded M2 playing-area foundation authorized by trial request. Native alignment/area/strike acceptance open; no MIDI/plugin advancement or merge approval |
 | K-09 | Integration risk | MIDI collisions, cleanup, Logic routing, instrument mapping and host lifecycle untested |
 | K-10 | Dependency risk | MediaPipe native macOS packaging/acceleration, exact model size/license and resource cost unverified; not installed |
 | K-11 | Future scope | AUv2/AUv3 choice, sampler, signing/notarization and supported release matrix deferred until later milestones |
@@ -30,6 +30,8 @@ full tracking/contact acceptance.
 | K-21 | Interpretation constraint | Fixed oblique angle and 0.72 cutoff retained; cutoff is display filtering, not contact confidence. Native app runtime/one-hand preview now visually observed; exact build/tests and two-hand/strike accuracy not certified |
 | K-22 | Confirmed display defect; patched-source retest needed | Overlay vertically reflected at rest in reviewed clip. Corrected lower-left projection against actual preview rectangle, with mirror/letterbox tests; no model accuracy gain claimed until native retest |
 | K-23 | Timing prerequisite | Sampled PTS age ~53 ms before ~10 ms median inference; camera connection/buffering/clock meaning require controlled investigation. Not measured physical contact→sound latency |
+| K-24 | Calibration prototype limitation | Four-corner image-area source implemented/tested; native clicks/grid/mirror/resize and invalidation unrun. No height/contact or per-contact rest/release yet. Camera movement during live capture requires manual reset |
+| K-25 | Baseline constraint | Preserve 720p/30, detail and temporal sampling. No measured CPU/latency/accuracy improvement claimed for updates; owner clarified resolution change is optional only with supporting evidence |
 
 Resolved initial setup assumption: the repository is no longer remotely empty;
 the owner's README commit was fetched before creating this documentation branch.

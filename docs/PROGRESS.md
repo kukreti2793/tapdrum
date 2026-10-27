@@ -1,11 +1,31 @@
 # Project progress and handoff
 
-Updated: 2026-10-27. Active milestone: **1 — camera and hand tracking**.
-Owner approved proceeding (“approved. go ahead”). Capture/tracking prototype
+Updated: 2026-10-27. Active work: **M1 correction + requested M2 playing-area foundation**.
+Owner approved proceeding and later requested trial corrections/calibration. Capture/tracking prototype
 source and shared tests are implemented. After the first native build failure and
 source correction, the owner now reports a live M1 trial. **The clip is now reviewed; a vertical overlay bug is patched in source and
 tracking acceptance remains pending a native correction retest.**
 No strikes, MIDI, sound engine, plugin or microphone is implemented.
+
+## Current branch and native retest
+
+`feat/fixed-angle-calibration` builds on M1 correction commit `296ac82` and adds
+session-only four-corner area selection, convex validation, forward/inverse
+perspective mapping, a blue guide and projected-fingertip diagnostics. It resets
+on capture changes/stalls and requires manual reset after camera movement.
+**25 Core tests pass**; Mac source syntax parses. Updated native app compile,
+projection/click alignment and calibration invalidation need the owner's Mac.
+
+Follow [CALIBRATION.md](CALIBRATION.md). Keep the fixed angle and 720p/30 baseline;
+do not repeat optional lower-resolution work without evidence. First verify wrist
+and fingertip markers align, then select four area corners in order, test both
+hands/mirror/resize/reset and report diagnostics. No new local agent access,
+footage recording, microphone, contact classification or MIDI is involved.
+
+This is a bounded foundation requested by the owner, not a claim M1 passed or
+M2 strike recognition is complete. After native geometry validation, the next
+recognition work is per-contact resting/released references and labeled temporal
+strike experiments; MIDI/Logic recording remain gated by those results.
 
 ## Current trial review — accessible recording inspected
 
@@ -78,10 +98,11 @@ tests, or signing/permissions were independently verified from that report alone
 - Concrete Mac packaging/run scripts and a text-only acceptance checklist are in
   [BUILD_AND_RUN.md](BUILD_AND_RUN.md) and [MILESTONE_1_CHECKLIST.md](MILESTONE_1_CHECKLIST.md).
 
-Next: owner builds/runs on the Mac, returns the first compiler/startup error or
-the checklist's numerical/qualitative results; fix any native failures, then
-evaluate C1/V1. Stable tracking acceptance and **new explicit approval** are
-required before Milestone 2. Do not ask again for already supplied versions or cable.
+Next: owner runs the calibration branch and returns native alignment/area results;
+fix failures before per-contact recognition. The trial request authorizes necessary
+calibration progress; do not request the same approval again or treat it as passing
+gates. MIDI/plugins still need later acceptance and approval. Do not repeat
+answered hardware/version/cable questions.
 
 ## Reusable cloud setup
 

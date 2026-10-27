@@ -5,6 +5,13 @@ permission to advance have not. This is camera-only with no recordings, no
 microphone, no MIDI, and no contact detection. Please send observations/numbers
 and errors as text. Do not save video/audio or raw landmark trajectories.
 
+Update: the owner supplied an explicit trial clip, reviewed in
+[TRIAL_2026_10_27.md](TRIAL_2026_10_27.md), and requested correction/calibration
+progress. That revealed a reflected overlay, now patched. Use
+[CALIBRATION.md](CALIBRATION.md) for the current native retest (25 Core tests on
+that branch); the original M1-only branch has 16. Full checklist acceptance is
+still open. Reviewing the supplied clip does not enable app recording.
+
 ## First useful check
 
 1. Follow [BUILD_AND_RUN.md](BUILD_AND_RUN.md) using the feature branch. Note the

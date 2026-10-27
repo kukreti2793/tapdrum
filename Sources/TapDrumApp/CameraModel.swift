@@ -8,10 +8,17 @@ final class CameraModel: ObservableObject {
     @Published private(set) var cameras: [CameraDescriptor] = []
     @Published var selectedCameraID = "" {
         didSet {
-            if selectedCameraID != oldValue { selectedModeID = selectedCamera?.defaultMode?.id ?? "" }
+            if selectedCameraID != oldValue {
+                invalidatePlayingArea("Camera changed. Set the playing area again.")
+                selectedModeID = selectedCamera?.defaultMode?.id ?? ""
+            }
         }
     }
-    @Published var selectedModeID = ""
+    @Published var selectedModeID = "" {
+        didSet {
+            if selectedModeID != oldValue { invalidatePlayingArea("Capture mode changed. Set the playing area again.") }
+        }
+    }
     @Published var mirrorPreview = false
     @Published var showFingerLabels = true
     @Published var minimumConfidence = 0.72 {
@@ -28,6 +35,8 @@ final class CameraModel: ObservableObject {
     @Published private(set) var memoryPressure = "Not observed"
     @Published private(set) var trackingError: String?
     @Published private(set) var framesAreStale = false
+    @Published private(set) var playingArea = PlayingAreaCalibration()
+    @Published private(set) var calibrationMessage = "Start the camera, then mark your playing area."
 
     private var generation = 0
     private var lastFrameHostTime: Double?
@@ -76,8 +85,51 @@ final class CameraModel: ObservableObject {
 
     func refreshDevices() { pipeline.refreshDevices() }
 
+    func beginPlayingArea() {
+        guard phase.isRunning, !framesAreStale else { return }
+        playingArea.begin()
+        calibrationMessage = "Click corner 1 of 4 in the preview, going around the tabletop area."
+    }
+
+    func selectPlayingAreaPoint(_ point: NormalizedPoint?) {
+        guard phase.isRunning, !framesAreStale, playingArea.isSelecting else { return }
+        guard let point else {
+            calibrationMessage = "Click inside the camera image, outside any black bars."
+            return
+        }
+        switch playingArea.select(point) {
+        case .cornerAccepted(let count): calibrationMessage = "Click corner \(count + 1) of 4, continuing around the area."
+        case .ready: calibrationMessage = "Playing area set for this capture run."
+        case .invalidPolygon: calibrationMessage = "Corners must form a non-crossed area. Try all four again in order."
+        case .ignored: break
+        }
+    }
+
+    func resetPlayingArea() {
+        playingArea.reset()
+        calibrationMessage = "Playing area cleared. Mark it again at the fixed camera angle."
+    }
+
+    var projectedFingertipCount: Int {
+        guard let area = playingArea.area else { return 0 }
+        let tips = HandJoint.fingerChains.compactMap(\.last)
+        return hands.reduce(0) { count, hand in
+            count + tips.filter { joint in
+                guard let sample = hand.joints[joint], sample.confidence >= minimumConfidence else { return false }
+                return area.tableCoordinates(of: sample.point) != nil
+            }.count
+        }
+    }
+
+    private func invalidatePlayingArea(_ reason: String) {
+        guard playingArea.area != nil || playingArea.isSelecting || !playingArea.draft.isEmpty else { return }
+        playingArea.reset()
+        calibrationMessage = reason
+    }
+
     func start() {
         guard canConfigure, let mode = selectedMode else { return }
+        invalidatePlayingArea("New capture run. Mark the playing area again.")
         generation += 1
         let token = generation
         let deviceID = selectedCameraID
@@ -108,6 +160,7 @@ final class CameraModel: ObservableObject {
     }
 
     func stop(completion: (@MainActor @Sendable () -> Void)? = nil) {
+        invalidatePlayingArea("Capture stopped. Mark the playing area again after restarting.")
         generation += 1 // Ignore queued observations and permission replies from the old run.
         hands = []
         lastFrameHostTime = nil
@@ -145,6 +198,9 @@ final class CameraModel: ObservableObject {
             !FrameFreshness.isFresh(frameHostTime: $0, now: HostTime.seconds)
         } ?? false)
         hands = phase.isRunning && !framesAreStale ? snapshot.hands : []
+        if !phase.isRunning || framesAreStale {
+            invalidatePlayingArea("Capture changed or stalled. Mark the playing area again when video is live.")
+        }
     }
 
     private func tick() {
@@ -153,6 +209,7 @@ final class CameraModel: ObservableObject {
            !FrameFreshness.isFresh(frameHostTime: last, now: now) {
             hands = []
             framesAreStale = true
+            invalidatePlayingArea("Video stalled. Mark the playing area again when frames resume.")
         }
         if now - lastResourceTime >= 1 {
             resources = resourceSampler.sample()

@@ -7,15 +7,16 @@ palms, sending editable MIDI performances to a Logic Pro drum instrument.
 Camera data will be processed locally. Physical contact recognition and musical
 latency are research questions, not demonstrated capabilities.
 
-**Status: Milestone 1 — camera/hand-tracking prototype implemented; native Mac
-build and hardware acceptance pending.** Sixteen shared-logic tests pass on Linux.
+**Status: reviewed tracking trial; overlay correction and guided playing-area
+calibration implemented in source, native retest pending.** Twenty-five shared
+Core tests pass on Linux. The initial app is visibly running in the owner trial.
 Strike recognition, MIDI and sound are later milestones. The native macOS
 specification supersedes an earlier browser drum-pad suggestion.
 
 ## Try the tracking prototype on your Mac
 
 See [the Mac build/run guide](docs/BUILD_AND_RUN.md) and
-[the first-run checklist](docs/MILESTONE_1_CHECKLIST.md). With this feature branch
+[the calibration/retest guide](docs/CALIBRATION.md). With this feature branch
 checked out and Xcode installed, run from the repository directory:
 
 ```sh
@@ -35,6 +36,7 @@ Mac. There is no prebuilt or notarized application release yet.
 - [Proposed architecture](docs/ARCHITECTURE.md) and [technology comparison](docs/TECH_STACK.md)
 - [Milestones and approval gates](docs/IMPLEMENTATION_PLAN.md)
 - [Test protocol](docs/TEST_PLAN.md) and [actual results](docs/TEST_RESULTS.md)
+- [Reviewed trial and diagnostic samples](docs/TRIAL_2026_10_27.md)
 - [Current progress](docs/PROGRESS.md), [known issues](docs/KNOWN_ISSUES.md),
   [decisions](docs/DECISIONS.md), and [changelog](docs/CHANGELOG.md)
 - [Mac information and manual checks](docs/HARDWARE_CHECKLIST.md)
@@ -53,7 +55,8 @@ Xcode 26.6, and iPhone 17 Pro on iOS 26.6.2 with an original data cable. No
 macOS/Logic/Xcode version is claimed tested until verified there. The first
 experiment is camera-only, without recordings.
 
-The owner approved Milestone 1. The standalone controller is intended to feed an
+The owner approved M1 and requested corrections/calibration after the trial. The standalone controller is intended to feed an
 existing Logic drum instrument in later milestones. A custom sampler or Audio
-Unit remains deferred until MIDI recording works. Stable target-Mac tracking
-acceptance and new owner approval are required before Milestone 2.
+Unit remains deferred until MIDI recording works. The current guided area step
+does not validate physical contact or complete M2. Corrected tracking and region
+interaction need a native retest before strike recognition progresses.

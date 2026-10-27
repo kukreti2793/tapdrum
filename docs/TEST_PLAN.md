@@ -6,6 +6,14 @@ not measured results or product guarantees. Active scope is M1. No M2 approval.
 See [actual results](TEST_RESULTS.md), [build/run steps](BUILD_AND_RUN.md), and
 [the first native checklist](MILESTONE_1_CHECKLIST.md).
 
+The owner's subsequent request authorized the guided playing-area foundation.
+The calibration branch has 25 passing Core tests; its manual native procedure is
+[CALIBRATION.md](CALIBRATION.md). Verify overlay registration, corner clicks,
+crossed/concave/degenerate rejection, both windings, mirror/resize invariance,
+black-bar rejection, Stop/restart/mode/device/stall invalidation and manual reset
+after camera movement. No passed contact/strike criterion is implied by area
+membership; hovering points can project inside the region.
+
 ## Evidence rules and current privacy boundary
 
 For each run record app commit/build, exact OS/SDK/device versions, camera
@@ -34,8 +42,9 @@ why, and request a separate experiment decision. Never relax it silently.
   phased plan and explicit unresolved questions. Check documentation links.
 - Acceptance: owner has enough evidence to approve a narrow Milestone 1; all
   unsupported claims are marked, and no application code was created.
-- Owner version/cable reports and Apple API documentation are now available.
-  Camera mount, active native tools and owner architecture/M1 approval remain open.
+- Owner versions/cable, toolchain log and Apple API documentation are available;
+  M1 direction and bounded calibration progress are approved. Updated native
+  geometry/interaction, mount stability and full tracking acceptance remain open.
 
 ## C1/V1 — capture and tracking (Milestone 1)
 

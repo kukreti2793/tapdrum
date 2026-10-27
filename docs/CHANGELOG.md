@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased — 2026-10-27 — guided playing-area foundation
+
+- Added session-only four-corner area selection, convex geometry validation,
+  bidirectional perspective mapping, preview guides and projected fingertip counts.
+- Reset area on capture/mode/device/stall changes; preserve through mirror/resize;
+  make manual reset after camera movement explicit. No height/contact inference.
+- Added nine passing geometry/state tests (25 Core total) and the native retest
+  guide. Native updated build/click/render paths still need the owner's Mac.
+- Preserve baseline 720p/30, frame analysis and raw confidence; no resolution
+  shortcut, smoothing, model/download, recording, microphone or musical output.
+
 ## Unreleased — 2026-10-27 — reviewed trial and preview correction
 
 - Reviewed the accessible 30-second trial; recorded one-hand iPhone 720p/30

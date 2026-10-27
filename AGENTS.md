@@ -15,17 +15,19 @@ At the beginning of each session:
 
 ## Current scope and approval
 
-- The owner explicitly approved proceeding on 2026-10-27. Active scope is
-  **Milestone 1: native camera preview and hand tracking with diagnostics**.
-- Implement only capture, two-hand/finger observations, confidence/handedness,
-  preview/overlay and frame/resource diagnostics. No strike recognition, MIDI,
-  sampler, plugin, microphone or recordings. Milestone 2 needs new approval after
-  target-Mac tracking acceptance. Ask about significant architectural changes.
+- The owner approved M1 on 2026-10-27. The later request to analyze/correct/calibrate and proceed
+  authorizes the bounded **M1 projection fix + M2 playing-area foundation**.
+- Active branch `feat/fixed-angle-calibration` adds session-only four-corner
+  playing-area geometry on the M1 correction; see docs/CALIBRATION.md. Full M1
+  acceptance remains pending. Verify corrected native alignment/area selection
+  before strike-engine work; no MIDI, sampler, plugin, microphone or recording.
+  Do not skip acceptance gates; ask about significant architectural changes.
 - Owner reports a 2020 M1 MacBook Pro, 8 GB, macOS 26.5.2, Logic Pro 10.7.2,
   Xcode 26.6, and iPhone 17 Pro on iOS 26.6.2 with an original data cable.
   Owner's first build log confirms Xcode 26.6 build 17F113, Apple Swift 6.3.3 and
   macOS 26.5 SDK; compilation failed on an unsupported capture preset, now patched
-  in source. Await a native rebuild; camera/Logic/latency are still unverified.
+  in source. Original camera runtime is now visible in the reviewed trial; updated
+  projection/calibration, Logic integration and physical latency are unverified.
 - Use the existing checkout. Cloud tasks are isolated; do not create a worktree
   unless the owner explicitly requests one.
 - The owner prefers cloud development and manually runs specific commands on

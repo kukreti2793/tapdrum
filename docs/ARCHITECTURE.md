@@ -13,6 +13,7 @@ plugin paths below remain future designs. See [DECISIONS.md](DECISIONS.md).
 | `Sources/TapDrumCore/HandObservation.swift` | Validated 21-joint observations, anatomical labels, confidence filtering, five-anchor palm proxy and coordinate-origin conversion |
 | `Sources/TapDrumCore/Diagnostics.swift` | Timestamp/freshness rules, fixed-capacity numerical statistics, analyzed cadence and process CPU deltas |
 | `Sources/TapDrumCore/PreviewProjection.swift` | Explicit lower-left Vision→overlay image-rectangle projection and inverse clicks, including mirroring/letterbox offsets; fixes the reflected overlay in the reviewed trial |
+| `Sources/TapDrumCore/PlayingArea.swift` | Convex quadrilateral validation, bidirectional homography to local unit-square positions and bounded four-click/reset state; no height/contact inference |
 | `Sources/TapDrumApp/CapturePipeline.swift` | Device/format discovery, camera-only session setup, synchronous bounded-inflight analysis with late-frame discard, per-run delegates and interruption/error recovery |
 | `Sources/TapDrumApp/VisionHandTracker.swift` | Replaceable tracker protocol, two-hand VN request, explicit finger mapping and frame-scoped chirality; no persistent track IDs |
 | `Sources/TapDrumApp/CameraModel.swift` | Main-actor controls, permission/run tokens, stale-overlay policy and periodic resource updates |
@@ -33,7 +34,25 @@ timer, so a silent camera's overlay may take roughly 500 ms to clear when the ma
 thread is responsive. This is a display policy, not a real-time latency guarantee.
 Camera switching is explicit Stop→select→Start. Only landscape with zero output
 rotation is supported initially; rotate/reposition only between runs. Automatic
-cross-frame identity association, calibration and all musical output are absent.
+cross-frame identity association, physical contact calibration and musical output
+are absent. Guided image-area calibration is implemented as described below.
+
+## Guided image-area foundation
+
+The current branch adds a four-click convex playing region in normalized,
+unmirrored Vision coordinates. The preview's inverse projection maps clicks into
+that domain, rejecting black bars. Core validates corner count/order, convexity,
+area and invertibility, then builds a projective transform and inverse. A unit
+square is a local on-plane coordinate convention, not metric table geometry or
+finger height. Projected fingertip membership is diagnostic only, including hover.
+
+State is session-only: begin/collect four corners/ready/reset. Device/mode changes,
+stop/start, interruption and stale frames invalidate it. Mirroring and resize keep
+the underlying image geometry. Live camera movement is not automatically detected;
+the UI requires manual reset after movement/framing changes. No raw trajectories
+or images are saved. Nine new Core tests cover geometry and selection states.
+This first M2 foundation is within the owner's correction/calibration request;
+it does not assert M1 acceptance, strike recognition or MIDI readiness.
 
 The first Mac build exposed an unsupported preset reference: `.inputPriority`
 is not a macOS API. Capture now sets device `activeFormat` and min/max frame
