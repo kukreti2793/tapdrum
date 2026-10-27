@@ -30,6 +30,7 @@ rejected. Do not turn a recommendation into an approved architectural decision.
 | D-023 | 2026-10-27 | Owner clarification | Resolution reduction was an optional suggestion. Accuracy, frame rate, calibration and low latency take priority. Keep 720p/30 baseline; no new resolution shortcut, inference throttle or smoothing. Existing native mode picker remains available for controlled future experiments |
 | D-024 | 2026-10-27 | Authorized bounded calibration step | Owner explicitly requested necessary accuracy corrections/calibrations and further progress after M1 trial. Implement four-corner projected playing area with perspective mapping/reset, while M1 projection retest remains open. This is M2 foundation, not acceptance of contact recognition or permission to skip gates into MIDI |
 | D-025 | 2026-10-27 | Calibration contract | Store four image references in memory for one capture run. Reset on capture changes/stalls; retain through mirror/resize; manual reset after camera movement. No raw histories, footage, model additions, physical height/contact claims or musical output |
+| D-026 | 2026-10-28 | Owner pause | Positive “looks great!” feedback; owner will save/publish and resume later. Stop implementation at this checkpoint. Next is remaining native checks followed by M2 rest/release and strike feasibility; do not infer exhaustive test acceptance, publication success or merge approval |
 
 M1 fixes and the bounded playing-area step are authorized. Target-Mac alignment,
 area interaction and then strike feasibility need evidence before advancing.

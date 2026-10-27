@@ -1,6 +1,28 @@
 # Project progress and handoff
 
-Updated: 2026-10-27. Active work: **M1 correction + requested M2 playing-area foundation**.
+Updated: 2026-10-28. Paused checkpoint: **M1 correction + M2 playing-area foundation**.
+
+## Owner pause / next-session handoff
+
+The owner responded “looks great!” and is saving/publishing the environment before
+resuming later. Record this as positive qualitative feedback, not a completed
+two-hand/soak/contact/latency test report. Do not start new implementation while
+the owner has paused. Publication is a user action and has not been verified here.
+
+Current branch: `feat/fixed-angle-calibration`; draft PR #3. Code and the 25-test
+Core suite are saved on GitHub; no merge or release tag is authorized. Resume by
+reading this file, AGENTS.md, KNOWN_ISSUES.md and CALIBRATION.md, then checking the
+actual restored branch/toolchain and Git status. Do not assume processes or a
+fresh restored task were validated merely because publication was requested.
+
+Next substantive work: finish any outstanding native overlay/area checks, then
+Milestone 2 per-contact resting/raised references and timestamped strike/hover
+recognition with duplicate suppression. Keep the fixed camera angle, 720p/30,
+cutoff preference 0.72, full-rate tracker processing and manual Mac-command
+workflow. Preserve accuracy/temporal sampling over speculative CPU reductions.
+Camera-only, no automatic recordings/microphone; MIDI/Logic recording remains a
+later milestone after strike validation. Read prior evidence below before coding.
+
 Owner approved proceeding and later requested trial corrections/calibration. Capture/tracking prototype
 source and shared tests are implemented. After the first native build failure and
 source correction, the owner now reports a live M1 trial. **The clip is now reviewed; a vertical overlay bug is patched in source and

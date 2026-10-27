@@ -1,5 +1,11 @@
 # Changelog
 
+## Checkpoint — 2026-10-28
+
+- Recorded positive owner feedback and pause for user-controlled save/publication.
+- Saved resume instructions and next M2 rest/release/strike-recognition work;
+  no application change, new validation, merge or publication performed.
+
 ## Unreleased — 2026-10-27 — guided playing-area foundation
 
 - Added session-only four-corner area selection, convex geometry validation,
