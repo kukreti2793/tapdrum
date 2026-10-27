@@ -25,6 +25,7 @@ rejected. Do not turn a recommendation into an approved architectural decision.
 | D-018 | 2026-10-27 | Validation boundary | Signed official Swift 6.0.3 Linux toolchain runs shared Core XCTest tests; Mac sources syntax-parsed only. No native build/hardware acceptance or paid hosted macOS CI assumed |
 | D-019 | 2026-10-27 | Owner preference | Continue cloud development with owner-run Mac commands and pasted results. Do not propose local Codex/terminal-agent/Xcode-agent access again unless requested |
 | D-020 | 2026-10-27 | Corrective implementation | First Mac compiler log shows inputPriority is unavailable on macOS. Remove the preset references, retain direct device format/frame-duration configuration, and make shutdown completion main-actor/sendable end-to-end; native rebuild pending |
+| D-021 | 2026-10-27 | Owner trial preference / evidence boundary | Owner supplied an M1 trial recording, prefers that fixed camera angle and reports overlay cutoff 0.72. Requests necessary corrections/calibration and further progress. Recording exceeds 32 MiB and is unviewed; preserve preferences without fabricating findings or skipping validation. Supplied-clip review does not authorize automatic app recording |
 
 Milestone 1 implementation is authorized. Target-Mac acceptance and approval to
 advance beyond tracking remain required. No milestone acceptance is inferred from

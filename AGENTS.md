@@ -31,6 +31,10 @@ At the beginning of each session:
 - The owner prefers cloud development and manually runs specific commands on
   the Mac, sharing results here. Do not suggest local Codex, terminal-agent
   access, Xcode agent connections or remote Mac access unless the owner asks again.
+- Owner reports a live M1 trial, prefers its fixed camera angle, and used overlay
+  confidence 0.72. The supplied .mov exceeded the 32 MiB transfer limit and was
+  not viewed. Obtain a smaller clip before diagnosing angle-specific accuracy or
+  claiming acceptance. Reviewing that explicit upload does not enable app recording.
 
 ## Engineering and evidence
 

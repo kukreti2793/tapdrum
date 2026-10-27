@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased — 2026-10-27 — owner trial review pending
+
+- Recorded owner-reported live trial, fixed camera-angle preference, overlay cutoff
+  0.72 and request for necessary calibration/corrections and further progress.
+- Recording transfer exceeds 32 MiB; no visual analysis or accuracy claim made.
+  Confirmed from source that the cutoff filters display only. No app code changed.
+
 ## Unreleased — 2026-10-27 — first Mac compiler fix
 
 - Removed the macOS-unavailable `inputPriority` capture preset exposed by the

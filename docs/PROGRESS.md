@@ -2,9 +2,32 @@
 
 Updated: 2026-10-27. Active milestone: **1 — camera and hand tracking**.
 Owner approved proceeding (“approved. go ahead”). Capture/tracking prototype
-source and shared tests are implemented. **The owner's first native build failed;
-the source fix awaits a Mac rebuild.** Tracking acceptance is pending. No strikes,
-MIDI, sound engine, plugin or microphone is implemented.
+source and shared tests are implemented. After the first native build failure and
+source correction, the owner now reports a live M1 trial. **Visual trial review
+is blocked by the uploaded recording's size; tracking acceptance remains pending.**
+No strikes, MIDI, sound engine, plugin or microphone is implemented.
+
+## Current trial review — awaiting accessible evidence
+
+The owner supplied a screen recording, wants to keep the shown camera angle fixed,
+used overlay confidence 0.72, and requested necessary accuracy/calibration work
+and further progress. The file transfer tool refused the recording because it
+exceeds its 32 MiB maximum. No frames, camera angle, diagnostics or tracking errors
+were inspected. A shorter exported clip below the limit is the remaining input.
+
+Source inspection confirms the slider only filters displayed joints, connecting
+lines and the five-anchor palm proxy. It is not passed to Vision's pose request,
+does not calibrate the table and is not an accuracy percentage or strike threshold.
+Do not invent smoothing/contact thresholds or change the app default based only
+on the reported value. Preserve this angle preference until its evidence can be
+reviewed; do not ask the owner to reposition without a reason from the trial.
+
+Next: review an accessible short clip with preview and diagnostics visible, record
+qualitative alignment/identity/loss findings, make evidence-backed M1 corrections,
+then progress to necessary guided calibration/strike feasibility under the owner's
+request. Do not skip the tracking/measurement gates or infer their results from
+the mere presence of a video upload. No additional approval is needed just to
+inspect the explicitly supplied trial. No automatic app recording is authorized.
 
 ## First Mac build diagnosis and correction
 
@@ -24,9 +47,10 @@ now `@MainActor @Sendable` end-to-end, dispatched once to the main queue after
 capture stops. No warning suppression, framework changes or tool reinstall.
 
 Native source parsing and an isolated strict-concurrency callback type-check
-pass in cloud; full native compilation still needs the owner to pull this branch
-with `git pull --ff-only` and rerun `./scripts/run-macos.command`. Do not claim the
-reported compiler error is resolved on the Mac until that rebuild is supplied.
+passed in cloud. The later owner-reported live trial suggests progress beyond
+that failure, but its recording has not been inspected and the tested commit/
+build output is unknown. Do not claim the exact compiler diagnostics, all native
+tests, or signing/permissions were independently verified from that report alone.
 
 ## Current implementation and next task
 

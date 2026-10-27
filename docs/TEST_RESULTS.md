@@ -3,6 +3,30 @@
 Date: 2026-10-27. Current scope: approved Milestone 1 source implementation;
 native Mac acceptance pending. Historical M0 research evidence is retained below.
 
+## Owner-reported M1 trial — recording review blocked
+
+The owner reports running a trial with overlay confidence 0.72 and prefers to keep
+the camera at the angle shown in a supplied screen recording. The user requests
+review, necessary corrections/calibration, and further progress.
+
+- **Blocked:** the file download tool rejects the .mov as exceeding its 32 MiB
+  transfer limit. No local video was retrieved, no frames extracted and no visual
+  findings, diagnostics or accuracy measurements are available from it.
+- **Owner-reported only:** the live trial occurred. Commit, build/test completion,
+  camera/mode, FPS, resource values, alignment and identity stability are unknown;
+  do not promote them to independently reviewed passing outcomes.
+- **Source inspection:** 0.72 is an overlay display cutoff. Vision continues to
+  return its observations; low-scoring points/segments/palm anchors are hidden.
+  The value neither calibrates contact geometry nor establishes 72% accuracy.
+- **No code change/tests rerun:** evidence does not yet justify a tracking or
+  calibration correction. Only project records were updated; existing ten-test
+  results remain historical evidence, not new trial validation.
+
+Request a 10–20 second export under 32 MB (for example 720p) that retains the hand
+preview, overlay and diagnostics, ideally showing both rest and movement. A few
+screenshots can support static alignment review but cannot establish temporal
+tracking quality. Do not commit supplied footage or enable a recording feature.
+
 ## First owner-run Mac build — failed; source correction awaiting retry
 
 The owner supplied the output from `./scripts/run-macos.command` on the M1 Mac.
