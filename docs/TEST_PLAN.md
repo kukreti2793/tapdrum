@@ -32,7 +32,8 @@ why, and request a separate experiment decision. Never relax it silently.
   phased plan and explicit unresolved questions. Check documentation links.
 - Acceptance: owner has enough evidence to approve a narrow Milestone 1; all
   unsupported claims are marked, and no application code was created.
-- Hardware answers, blocked Apple documentation and owner approval remain pending.
+- Owner version/cable reports and Apple API documentation are now available.
+  Camera mount, active native tools and owner architecture/M1 approval remain open.
 
 ## C1/V1 — capture and tracking (Milestone 1)
 
@@ -59,6 +60,12 @@ Acceptance: stable live two-hand tracking on the actual Mac with disclosed limit
 no strike recognition, MIDI, or musical-latency claim at this milestone.
 
 ## S1 — camera-only strike feasibility (Milestone 2)
+
+Automated tests at this milestone should use synthetic timestamped observations
+to check per-contact state transitions: resting/hovering/lifting rejection,
+approach/reversal, credible release and rearm, duplicate suppression, rate limits,
+simultaneous contacts, low-confidence loss/reacquisition, stale frames and camera
+calibration invalidation. These verify event-engine logic, not vision accuracy.
 
 ### Live, non-recording protocol currently allowed
 

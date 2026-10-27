@@ -18,10 +18,11 @@ record editable MIDI; edit notes, velocities, and timing in Logic; then bounce
 audio using Logic. The app must explain tracking or calibration problems clearly.
 
 Owner reports a 2020 M1 MacBook Pro with 8 GB unified memory, macOS 26.5.2, and
-iPhone 17 Pro 512 GB. Xcode is downloading. Logic/iOS and installed Xcode/SDK
-versions, camera mounting and connection details remain pending. These reports
-are not independently verified compatibility evidence. Apple Silicon is the
-initial target; no wider support is promised.
+iPhone 17 Pro 512 GB. The owner subsequently supplied Logic Pro 10.7.2, Xcode
+26.6, iOS 26.6.2 and an original iPhone data cable. Xcode installation/active SDK,
+actual Continuity operation, and camera mounting remain to be checked. These
+reports are not independently verified compatibility evidence. Apple Silicon is
+the initial target; no wider support is promised.
 
 ## Scope
 

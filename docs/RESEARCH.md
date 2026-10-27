@@ -44,41 +44,51 @@ They corroborate the presence of candidate API surfaces only:
 Do not infer minimum macOS versions, sandbox behavior, model accuracy, or
 performance from these bindings. Verify the installed Xcode SDK before use.
 
-## Official documentation awaiting access/SDK verification
+## Official Apple documentation retrieved and inspected
 
-Requests to the following pages failed with proxy tunnel `403 Forbidden` in the
-current cloud runtime, including a recheck after saving domain requirements:
+Apple's sites initially returned proxy tunnel 403. Later live checks succeeded;
+the documentation JSON and support articles below were retrieved and read.
+This supersedes the earlier Apple-access blocker. Copies are in the research
+scratch directory. Documentation is not a substitute for native execution.
 
-- [Apple Vision hand-pose request](https://developer.apple.com/documentation/vision/vndetecthumanhandposerequest)
-  and its documentation JSON endpoint.
-- [Apple Continuity Camera support](https://support.apple.com/en-us/102546).
-- [Google Hand Landmarker guide](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker).
-
-Additional official research entry points are listed below as **unread targets**,
-not verified citations for specific behavior:
-
-| Topic | Official entry point | Verification needed |
+| Source | Verified finding | Remaining validation |
 | --- | --- | --- |
-| Camera capture | [AVFoundation](https://developer.apple.com/documentation/avfoundation) | Capture session/discovery, actual formats/frame-rate ranges, source clock, interruptions, permission descriptions/entitlements, Continuity discovery keys for chosen SDK |
-| Vision | [Vision](https://developer.apple.com/documentation/vision) | Deployment availability, chirality/revisions, confidence semantics, orientation, two-hand request and available optical flow |
-| MIDI | [CoreMIDI](https://developer.apple.com/documentation/coremidi) | Virtual source vs destination APIs, protocol selection, send/receive direction, host timestamps and lifecycle |
-| Audio Unit | [AUAudioUnit](https://developer.apple.com/documentation/audiotoolbox/auaudiounit) | AUv2/AUv3 instrument lifecycle, MIDI input/state, host/extension restrictions and render-thread contract |
-| Logic recording | [Logic Pro user guide](https://support.apple.com/guide/logicpro/welcome/mac) | Input filtering/routing, instrument selection, editable MIDI recording, latency settings and bounce on owner's version |
-| Toolchain | [Xcode support](https://developer.apple.com/support/xcode/) | Exact macOS host, SDK, compiler and deployment compatibility |
+| [VNDetectHumanHandPoseRequest](https://developer.apple.com/documentation/vision/vndetecthumanhandposerequest), [maximumHandCount](https://developer.apple.com/documentation/vision/vndetecthumanhandposerequest/maximumhandcount), [chirality](https://developer.apple.com/documentation/vision/vnhumanhandposeobservation/chirality) | VN hand pose is documented from macOS 11, chirality from macOS 12; maximum hand count defaults to two and selection is ordered by relative hand size | Selected SDK/request revision, real two-hand tabletop accuracy, confidence handling and throughput |
+| [Continuity Camera support](https://support.apple.com/en-us/102546) | Wired/wireless operation; macOS 13+, iOS 16+, iPhone XR+; shared Apple Account with 2FA, nearby Wi-Fi/Bluetooth, USB trust for wired use; interruptions can pause capture | Actual account/device configuration, available modes and measured transport latency; no latency guarantee in source |
+| [Continuity developer sample](https://developer.apple.com/documentation/avfoundation/supporting-continuity-camera-in-your-macos-app), [dedicated device type](https://developer.apple.com/documentation/avfoundation/avcapturedevice/devicetype-swift.struct/continuitycamera) | Discovery/preferred-camera observation and connection changes; dedicated continuityCamera type documented from macOS 14 | Older sample uses externalUnknown and includes microphone capture; do not run unchanged under camera-only consent. Check modern SDK discovery/privacy configuration |
+| [Video data output](https://developer.apple.com/documentation/avfoundation/avcapturevideodataoutput), [late-frame handling](https://developer.apple.com/documentation/avfoundation/avcapturevideodataoutput/alwaysdiscardslatevideoframes), [format frame-rate ranges](https://developer.apple.com/documentation/avfoundation/avcapturedevice/format/videosupportedframerateranges) | Delegate access to frames; default late-frame discard; buffering old frames can increase memory; per-format frame-rate ranges; warning against unnecessary BGRA conversion | Actual device modes, native pixel format/tracker compatibility, source clock/exposure meaning and frame age |
+| [Capture authorization](https://developer.apple.com/documentation/avfoundation/requesting-authorization-to-capture-and-save-media), [camera purpose string](https://developer.apple.com/documentation/bundleresources/information-property-list/nscamerausagedescription) | Explicit camera authorization and privacy-purpose configuration are part of capture setup | App signing/sandbox/entitlement configuration, denied/revoked paths on target OS; no microphone request in first prototype |
+| [Virtual source creation](https://developer.apple.com/documentation/coremidi/midisourcecreatewithprotocol(_:_:_:_:)), [source publication](https://developer.apple.com/documentation/coremidi/midireceivedeventlist(_:_:)), [destination sending](https://developer.apple.com/documentation/coremidi/midisendeventlist(_:_:_:)), [MIDITimeStamp](https://developer.apple.com/documentation/coremidi/miditimestamp) | Create app-owned virtual source then publish via MIDIReceivedEventList; destination sends use MIDISendEventList; timestamp uses mach_absolute_time host clock; protocol-aware source/event APIs documented macOS 11+ | Correct MIDI 1.0 protocol/event encoding, receiver evidence, persistent endpoint identity, cleanup and Logic 10.7.2 behavior |
+| [AUAudioUnit](https://developer.apple.com/documentation/audiotoolbox/auaudiounit), [extension template](https://developer.apple.com/documentation/avfaudio/creating-an-audio-unit-extension), [render contract](https://developer.apple.com/documentation/audiotoolbox/auinternalrenderblock), [document state](https://developer.apple.com/documentation/audiotoolbox/auaudiounit/fullstatefordocument) | AUAudioUnit hosts v2/v3, including extension process options; an Instrument accepts MIDI and produces audio; rendering receives time-ordered events; document state supports host persistence | Actual Logic compatibility, sandbox/lifecycle, sample loading, real-time safety and signing; no camera-in-plugin assumption justified |
+| [Logic inter-app MIDI guide](https://support.apple.com/guide/logicpro/record-midi-messages-from-another-music-app-lgcp9f309701/mac), [bounce guide](https://support.apple.com/guide/logicpro/bounce-a-project-to-an-audio-file-lgcp785a41c3/mac) | Current guide documents a Logic Pro Virtual In destination and rendering software-instrument tracks to audio files | Current guide is not version-specific proof for the owner's 10.7.2. App-owned CoreMIDI source, exact input controls, editable recording and bounce must be tested there |
+| [Xcode support table](https://developer.apple.com/support/xcode/) | Retrieved Xcode 26.6 row lists macOS Tahoe 26.2–26.x host, macOS 26.5 SDK and Swift 6.3 compiler | Reported macOS 26.5.2 is within the documented host range; installed/active tools and native build remain unverified |
 
-The environment draft now includes `developer.apple.com`, `support.apple.com`,
+The exact minimal deployment target is not chosen merely from the oldest one of
+these APIs. All selected calls, the actual target OS and distribution needs must
+be checked together. Nothing here certifies Logic 10.7.2 on macOS 26.5.2.
+
+## Remaining source/network limitations
+
+The [Google Hand Landmarker guide](https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker)
+still returned proxy tunnel 403 at the latest check. Its primary repository
+API/license sources above were accessible; native macOS packaging, model terms
+and acceleration remain future evaluation tasks, not established capabilities.
+
+The environment draft includes `developer.apple.com`, `support.apple.com`,
 `ai.google.dev`, and `api.github.com`, preserving the package-manager preset.
-Draft saving succeeded but did not change runtime access or publish. The owner
-can review/save settings and publish the environment; then retry affected reads.
-No network denial is interpreted as a missing GitHub token. Native Git reads
-already work; GitHub API access is a separately blocked operation.
+Saving was confirmed and requires publication; saving itself does not execute
+scripts, apply settings or publish. Current Apple and GitHub PR operations were
+independently checked after the initial failures. A GitHub REST read initially
+failed, but authenticated branch push and draft PR creation subsequently
+succeeded without new credentials. No token was requested.
 
 ## Research conclusion and next questions
 
 Native capture + replaceable hand tracking + temporal recognition + CoreMIDI is
 the smallest useful proposed architecture. Evidence does **not** settle contact
 detection, camera transport latency, supported deployment versions, or host
-integration. Complete official Apple API verification and target-Mac inventory
-before finalizing choices. Camera-only/no-recording instructions currently rule
+integration. Core Apple API research and owner version reports are now available;
+verify selected APIs and tool activation on the target Mac before implementation.
+Camera-only/no-recording instructions currently rule
 out microphone experiments and recorded labeled footage; use the live protocol
 and state which timing/accuracy conclusions remain unavailable.

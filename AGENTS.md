@@ -20,9 +20,10 @@ At the beginning of each session:
 - Do not write application source or proceed to Milestone 1 until the owner
   explicitly approves. Architecture proposals and numerical test gates remain
   provisional until reviewed; ask about significant architectural changes.
-- Owner reports a 2020 M1 MacBook Pro, 8 GB, macOS 26.5.2, and iPhone 17 Pro.
-  Logic/iOS versions and installed Xcode/SDK remain unknown. Linux cloud checks
-  cannot establish native compatibility or musical latency.
+- Owner reports a 2020 M1 MacBook Pro, 8 GB, macOS 26.5.2, Logic Pro 10.7.2,
+  Xcode 26.6, and iPhone 17 Pro on iOS 26.6.2 with an original data cable.
+  Installation/SDK and native compatibility still need verification on the Mac.
+  Linux checks cannot establish musical latency or working Logic integration.
 - Use the existing checkout. Cloud tasks are isolated; do not create a worktree
   unless the owner explicitly requests one.
 

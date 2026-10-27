@@ -29,9 +29,10 @@ The current cloud workspace is Linux x86_64. It supports documentation and Git
 work, but does not have Apple's macOS frameworks, Xcode, or Logic Pro. There are
 no dependencies to install or services to start for Milestone 0. Native builds,
 camera tests, CoreMIDI tests, and Logic Pro recording require the owner's Mac.
-Owner reports a 2020 M1 MacBook Pro with 8 GB, macOS 26.5.2, and an iPhone 17 Pro;
-Xcode is downloading. No macOS/Logic/Xcode version is claimed supported until
-verified there. The first experiment is camera-only, without recordings.
+Owner reports a 2020 M1 MacBook Pro with 8 GB, macOS 26.5.2, Logic Pro 10.7.2,
+Xcode 26.6, and iPhone 17 Pro on iOS 26.6.2 with an original data cable. No
+macOS/Logic/Xcode version is claimed tested until verified there. The first
+experiment is camera-only, without recordings.
 
 The provisional direction is a native standalone controller feeding an existing
 Logic drum instrument. A custom sampler or Audio Unit is deferred until MIDI

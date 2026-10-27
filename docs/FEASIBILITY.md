@@ -13,10 +13,10 @@ research proposal, not a claim that the complete instrument is feasible.
 | R-05 Palm/base interpretation | Wrist/MCP landmarks do not locate the actual contact patch | Treat a derived palm/base proxy as its own experiment and report separately; do not silently remove the requirement |
 | R-06 Perspective/calibration | Image-space vertical motion need not point toward the table | Test oblique vs overhead views, rest/release references and moved cameras; invalidate unsuitable calibration |
 | R-07 Resource contention | Vision competes with Logic on an 8 GB machine | Measure CPU, footprint, memory pressure, thermal state and audio overload with a fixed Logic session |
-| R-08 Native/host compatibility | Cloud Linux cannot exercise Apple SDKs, TCC privacy or Logic routing | Confirm versions; build/run on actual Mac; complete independent MIDI and Logic tests before plugin work |
+| R-08 Native/host compatibility | Cloud Linux cannot exercise Apple SDKs, TCC privacy or Logic routing; owner reports older Logic 10.7.2 with macOS 26.5.2 | Version reports and Xcode host-range documentation are available; build/run on actual Mac and test Logic there before claiming support or requesting version changes |
 | R-09 Optional audio confirmation | Impacts may be confused with speech, other taps or drum playback | Separate opt-in experiment; test speaker feedback and attribution; no hidden microphone dependency |
 | R-10 MIDI collisions/lifecycle | Both hands can map to identical notes; old offs may kill retriggers | Independent receiver, deterministic collision policy, fault tests and panic; verify host behavior |
-| R-11 Evidence access | Apple/Google documentation pages are blocked in this cloud runtime | Save research allowlist; retain unverified status until official pages and the selected SDK can be read |
+| R-11 Evidence access | Apple access initially failed but later worked; Google guide remains blocked | Apple API docs and MediaPipe primary source are reviewed. Selected local SDK, model packaging/license and native behavior still need evaluation |
 
 ## Contact experiment
 

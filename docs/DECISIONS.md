@@ -17,5 +17,7 @@ rejected. Do not turn a recommendation into an approved architectural decision.
 | D-010 | 2026-10-27 | Proposed | Channel 10 defaults and explicit same-pitch MIDI collision/retrigger policy; independent receiver must verify behavior |
 | D-011 | 2026-10-27 | Deferred | AUv2 vs AUv3, sampler/model/sample assets, exact deployment matrix and distribution/signing choice await measured needs and relevant gates |
 | D-012 | 2026-10-27 | Owner workflow | Feature branches/focused commits/PR review, no merge without owner approval, no destructive Git operations without authorization |
+| D-013 | 2026-10-27 | Owner report | Logic Pro 10.7.2, Xcode 26.6, iOS 26.6.2 and original iPhone data cable supplied; installed tools/native compatibility still require checks |
+| D-014 | 2026-10-27 | Research finding | Direct Apple docs verify proposed API surfaces and reported Xcode/macOS host-range pairing on paper; do not assume current Logic Virtual In documentation applies to 10.7.2 |
 
 No architecture or Milestone 1 implementation approval has been received.

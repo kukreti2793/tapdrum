@@ -1,8 +1,9 @@
 # Architecture recommendation — provisional
 
 Status: Milestone 0 proposal, **not approved or implemented**. Final selection is
-pending hardware answers, accessible Apple documentation/SDK verification, and
-owner review. Related choices are tracked in [DECISIONS.md](DECISIONS.md).
+pending target-Mac/SDK validation and owner review. Owner-reported tool versions
+and direct Apple documentation have now been recorded; they do not establish
+working native integration. Related choices are in [DECISIONS.md](DECISIONS.md).
 
 ```mermaid
 flowchart LR
@@ -34,6 +35,12 @@ if Vision cannot meet the measured requirements. Do not implement both backends
 up front. Do not assume MediaPipe's iOS package works in a native macOS target.
 Compare alternatives in [TECH_STACK.md](TECH_STACK.md).
 
+The owner reports Logic Pro 10.7.2 and Xcode 26.6 on macOS 26.5.2. Apple's Xcode
+table supports that host-range pairing on paper, but the older Logic version's
+behavior on this OS needs a live check. Do not mandate an upgrade based only on
+age. The reported iPhone 17 Pro/iOS 26.6.2 exceeds the documented Continuity
+baseline; real capture/format/account setup remains untested. See the inventory.
+
 ## Boundaries and conceptual contracts
 
 These are design contracts, not declarations of existing source modules.
@@ -62,6 +69,12 @@ rather than allowing latency to grow through an unbounded queue. Count dropped
 frames, since dropping can also miss strikes. Preview is decoupled and may update
 more slowly. Preserve pixel-buffer ownership until analysis finishes; avoid
 unnecessary full-frame conversions/copies and allocations in the hot path.
+Apple documents `alwaysDiscardsLateVideoFrames` for late-frame rejection and
+warns against defaulting to BGRA conversion because of extra work/memory. Select
+a native format the tracker accepts and measure any necessary conversion. Apple's
+Continuity sample includes microphone capture; do not run/copy that sample
+unchanged into this camera-only experiment. Check current discovery APIs in the
+installed SDK; its older sample uses a legacy external-device discovery path.
 
 Use a monotonic host clock for durations. Preserve source capture timestamps and
 verify their relationship to host time instead of assuming they are exposure
@@ -69,6 +82,8 @@ times. Convert to CoreMIDI host timestamps explicitly. Reject out-of-order or
 stale observations. Report capture arrival, inference duration, evidence delay,
 and emission separately. Backdating MIDI timestamps or estimated contact times
 cannot undo monitoring delay already incurred.
+Apple defines `MIDITimeStamp` in `mach_absolute_time()` host-clock units; timebase
+conversion must be explicit rather than passing nanoseconds or wall-clock dates.
 
 On tracking loss, freeze/reject uncertain contacts and require credible release
 before rearming. A hand reacquired at a new location is not a strike. Camera or
@@ -116,8 +131,16 @@ panic/reset action. Do not send cleanup to unrelated routes/channels casually.
 
 First test a CoreMIDI virtual source; an existing IAC route can be a diagnostic
 fallback. Use only one path to Logic at a time to prevent duplicate events.
+Apple documents `MIDISourceCreateWithProtocol` plus `MIDIReceivedEventList` to
+publish from an app-owned source. Sending to an existing destination instead uses
+`MIDISendEventList`; these directions must not be confused. Keep MIDI 1.0 note
+semantics initially, with the appropriate protocol/event encoding and tests.
 Verify the actual Logic input filter/routing, instrument map, MIDI recording,
 playback and bounce. A working endpoint or moving MIDI meter is insufficient.
+The current Logic guide documents “Logic Pro Virtual In,” but does not establish
+that route exists in the owner's **10.7.2**. Prefer the app-owned source for the
+first experiment and verify the actual version's input controls; menu names in
+newer documentation must not be presented as tested instructions for 10.7.2.
 
 ## Future plugin boundary
 

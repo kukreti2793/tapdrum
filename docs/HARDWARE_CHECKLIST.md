@@ -9,11 +9,11 @@ No camera or microphone recording is requested or authorized.
 | --- | --- |
 | Computer | Owner reports MacBook Pro M1, 2020, 8 GB memory |
 | macOS | Owner reports **26.5.2**; exact version/build not independently inspected |
-| Xcode | Owner is downloading it; installed version, first launch and SDK pending |
-| Logic Pro | Installed version not supplied; compatibility not verified |
+| Xcode | Owner reports version 26.6 after initially reporting a download; installation/first launch/active SDK not independently checked |
+| Logic Pro | Owner reports 10.7.2; operation on the reported macOS and integration not verified |
 | iPhone | Owner reports iPhone 17 Pro, 512 GB |
-| iOS | Version not supplied; Continuity availability not verified |
-| USB connection | Data-capable cable availability and wired operation unknown |
+| iOS | Owner reports 26.6.2; actual Continuity operation not verified |
+| USB connection | Owner has the original iPhone data cable; wired operation/trust and measured latency unverified |
 | Camera placement | Mount/angle and ability to see both hands/table unknown |
 | Audio output | Built-in/wired/interface path, sample rate and Logic buffer unknown |
 | Privacy | **Camera-only first; no recordings.** No microphone access or video/audio capture-to-disk experiments authorized |
@@ -21,11 +21,23 @@ No camera or microphone recording is requested or authorized.
 
 ## H0: version checks (before architecture finalization)
 
-Please report the Logic Pro version from **Logic Pro → About Logic Pro**, and the
-iOS version from **Settings → General → About**. Once Xcode finishes downloading,
-open it to complete Apple's normal first-run setup and report its version from
-**Xcode → About Xcode**. Report whether a USB data cable and stable phone mount
-are available. No Apple account credentials or device serial numbers are needed.
+Logic/iOS/Xcode versions and the cable have now been supplied; do not repeatedly
+ask for them. Once Xcode installation is complete, open it for Apple's normal
+first-run setup and verify the active toolchain with the checks below. The
+remaining setup question is camera mounting/angle. No Apple account credentials
+or device serial numbers are needed.
+
+Apple's retrieved Xcode support table lists Xcode 26.6 as hosted on macOS Tahoe
+26.2–26.x, with the macOS 26.5 SDK and Swift 6.3 compiler. The owner's reported
+macOS falls within that documented host range. This is a documentation match,
+not proof the installed Xcode works or that Logic 10.7.2 works on this macOS.
+Do not upgrade/downgrade the owner's tools without discussing a demonstrated need.
+
+Apple lists Continuity Camera webcam requirements as macOS Ventura 13+, iOS 16+
+and iPhone XR or later, plus a shared Apple Account with two-factor authentication,
+nearby devices with Wi-Fi/Bluetooth enabled, and USB trust for wired operation.
+Reported hardware/OS meet the stated version baseline; account/configuration and
+actual video capture still need live verification. Never request account secrets.
 
 If comfortable using Terminal on the Mac, these read-only checks can supply the
 exact OS and active toolchain details:
@@ -52,6 +64,9 @@ We will select a compatible stable toolchain using the reported versions.
 3. Compare built-in, wired iPhone and wireless iPhone only when available; use the
    same camera view, lighting and settings where possible. Confirm the operating
    connection rather than assuming a cable automatically selects wired transport.
+   Apple's guide confirms wired and wireless operation, but gives no measured
+   guarantee that either meets TapDrum's latency targets. Disable or account for
+   framing/effects that alter calibration; do not assume camera images are fixed.
 4. Test permissions, switching, occlusion and camera loss. Preview mirroring must
    not change which anatomical hand is labeled left/right.
 5. Keep microphone and recording features off/absent. Report numerical counters

@@ -11,14 +11,17 @@ Date: 2026-10-27. Scope: Milestone 0 documentation/research only.
 | Later remote read/fetch | Passed | Owner README commit `e60421f8e60815828a83a9ee12a8f63fc074476f` on main; fetched and based feature branch on it |
 | Existing work preservation | Passed at branch creation | Clean working tree before switching; README retained/expanded |
 | Runtime identification | Observed | Linux x86_64; `swift` and `xcodebuild` absent from PATH; not a target Mac |
-| Owner hardware inventory | Partial, owner-reported | M1/2020/8 GB, macOS 26.5.2, iPhone 17 Pro 512 GB, Xcode downloading; remaining details unknown |
+| Owner hardware inventory | Owner-reported, native checks pending | M1/2020/8 GB, macOS 26.5.2, Logic 10.7.2, Xcode 26.6, iPhone 17 Pro 512 GB/iOS 26.6.2, original data cable; mount and active SDK not checked |
 | MediaPipe primary sources | Retrieved and inspected | Pinned C++ API/result/graph/README/license; verified HTTPS, source SHA and local content hashes; no model inference run |
-| Apple API secondary sources | Retrieved and inspected | .NET bindings corroborate candidate API surfaces only; not SDK or official Apple semantic verification |
-| Apple/Google official guide access | Blocked | Proxy tunnel 403 on developer.apple.com, support.apple.com, ai.google.dev; retry after saved draft still blocked |
-| GitHub repository API read | Blocked | `gh api repos/kukreti2793/tapdrum` returned Forbidden; this does not establish missing Git authentication |
-| Environment network draft save | Confirmed saved | Required research/API domains added; publication required; not applied runtime access |
+| Apple API secondary sources | Retrieved and inspected | .NET bindings corroborated candidate surfaces; subsequently superseded for core findings by direct Apple documentation |
+| Apple official source access | Initially blocked, later succeeded | Vision, camera formats/late-frame handling/Continuity/privacy, CoreMIDI direction/timestamps, AU lifecycle/state, Logic MIDI/bounce and Xcode support pages retrieved and relevant sections inspected |
+| Xcode/macOS documentation match | Documented host-range match, not execution | Xcode 26.6 row lists host macOS 26.2–26.x, macOS 26.5 SDK and Swift 6.3; owner-reported OS is inside that range |
+| Google official guide access | Still blocked at latest check | ai.google.dev guide returned proxy tunnel 403; primary MediaPipe repository sources were accessible |
+| GitHub repository API read | Initial REST read failed | `gh api repos/kukreti2793/tapdrum` returned Forbidden; later PR creation/read worked without new credentials |
+| Environment network draft save | Confirmed saved | Research/API domains added, package-manager preset preserved; publication required and not performed. Later runtime access was independently tested |
 | Documentation consistency/link checks | Passed | All 16 Markdown files checked; 26 local links resolve; required inventory, fenced blocks, whitespace and documentation-only change scope verified |
-| Git commit/push/PR delivery | Pending | Update after actual outcomes; do not assume Git API/push shares read access |
+| Git commit/push/PR delivery | Passed for initial documentation delivery | Commit `6f362cd` pushed to feature branch; draft PR #1 created and queried OPEN/isDraft=true, base main, head docs/milestone-0-feasibility. Follow-up documentation records the later source/version findings |
+| Main branch preservation | Verified at PR check | Remote main remained `e60421f8e60815828a83a9ee12a8f63fc074476f`; no merge, force push or branch deletion |
 
 ## Not run
 
