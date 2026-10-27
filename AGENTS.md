@@ -15,17 +15,28 @@ At the beginning of each session:
 
 ## Current scope and approval
 
-- Active scope is **Milestone 0 only**: research, requirements, architecture
-  recommendations, and feasibility/test plans. There is no application code.
-- Do not write application source or proceed to Milestone 1 until the owner
-  explicitly approves. Architecture proposals and numerical test gates remain
-  provisional until reviewed; ask about significant architectural changes.
+- The owner explicitly approved proceeding on 2026-10-27. Active scope is
+  **Milestone 1: native camera preview and hand tracking with diagnostics**.
+- Implement only capture, two-hand/finger observations, confidence/handedness,
+  preview/overlay and frame/resource diagnostics. No strike recognition, MIDI,
+  sampler, plugin, microphone or recordings. Milestone 2 needs new approval after
+  target-Mac tracking acceptance. Ask about significant architectural changes.
 - Owner reports a 2020 M1 MacBook Pro, 8 GB, macOS 26.5.2, Logic Pro 10.7.2,
   Xcode 26.6, and iPhone 17 Pro on iOS 26.6.2 with an original data cable.
-  Installation/SDK and native compatibility still need verification on the Mac.
-  Linux checks cannot establish musical latency or working Logic integration.
+  Owner's first build log confirms Xcode 26.6 build 17F113, Apple Swift 6.3.3 and
+  macOS 26.5 SDK; compilation failed on an unsupported capture preset, now patched
+  in source. Await a native rebuild; camera/Logic/latency are still unverified.
 - Use the existing checkout. Cloud tasks are isolated; do not create a worktree
   unless the owner explicitly requests one.
+- The owner prefers cloud development and manually runs specific commands on
+  the Mac, sharing results here. Do not suggest local Codex, terminal-agent
+  access, Xcode agent connections or remote Mac access unless the owner asks again.
+- A replacement 30-second trial was reviewed: iPhone 720p/30, fixed oblique angle,
+  cutoff 0.72. Read docs/TRIAL_2026_10_27.md. Vertical overlay reflection is patched
+  with explicit lower-left preview projection; native correction needs retesting.
+  Owner prioritizes accuracy/frame rate/latency over CPU reduction: keep 720p/30;
+  do not reduce quality, throttle inference or smooth away motion without evidence.
+  User-supplied clip review does not enable app recording.
 
 ## Engineering and evidence
 

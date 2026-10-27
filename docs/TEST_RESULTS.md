@@ -1,8 +1,109 @@
 # Test and research results
 
-Date: 2026-10-27. Scope: Milestone 0 documentation/research only.
+Date: 2026-10-27. Current scope: approved Milestone 1 source implementation;
+native Mac acceptance pending. Historical M0 research evidence is retained below.
 
-## Executed observations
+## Replacement trial reviewed; preview correction awaiting native retest
+
+See [TRIAL_2026_10_27.md](TRIAL_2026_10_27.md). Replacement upload: 29,824,670 bytes,
+H.264, 1280×800 screen capture, duration 30.3167 s, no audio stream. Eleven sampled
+frames and three full-resolution frames reviewed. Running iPhone 720p/30 preview
+observed with cutoff 0.72; persistent vertical skeleton reflection identified.
+At 6/18/30 s: ~30 analyzed fps, 0 displayed drops, 1 rejected, 0 Vision failures;
+Vision p50 9.5–10.0 ms/p95 14.3–14.6 ms; PTS age p50 52.9–53.3 ms. CPU 42.2–45.1%
+of one core; footprint 80.1–80.5 MiB; thermal nominal; last pressure event Warning.
+These are sampled rolling displays, not distributions or contact-to-sound timing.
+
+Source correction uses lower-left normalized projection into the actual image
+rectangle; native retest pending. Six projection tests added; no model smoothing,
+confidence rewriting, resolution reduction or inference throttling. All 16 current
+Core XCTest cases passed with 0 failures/skips. No footage or
+extracted images committed. Earlier transfer failure below is historical.
+
+## Owner-reported M1 trial — recording review blocked
+
+The owner reports running a trial with overlay confidence 0.72 and prefers to keep
+the camera at the angle shown in a supplied screen recording. The user requests
+review, necessary corrections/calibration, and further progress.
+
+- **Blocked:** the file download tool rejects the .mov as exceeding its 32 MiB
+  transfer limit. No local video was retrieved, no frames extracted and no visual
+  findings, diagnostics or accuracy measurements are available from it.
+- **Owner-reported only:** the live trial occurred. Commit, build/test completion,
+  camera/mode, FPS, resource values, alignment and identity stability are unknown;
+  do not promote them to independently reviewed passing outcomes.
+- **Source inspection:** 0.72 is an overlay display cutoff. Vision continues to
+  return its observations; low-scoring points/segments/palm anchors are hidden.
+  The value neither calibrates contact geometry nor establishes 72% accuracy.
+- **No code change/tests rerun:** evidence does not yet justify a tracking or
+  calibration correction. Only project records were updated; existing ten-test
+  results remain historical evidence, not new trial validation.
+
+Request a 10–20 second export under 32 MB (for example 720p) that retains the hand
+preview, overlay and diagnostics, ideally showing both rest and movement. A few
+screenshots can support static alignment review but cannot establish temporal
+tracking quality. Do not commit supplied footage or enable a recording feature.
+
+## First owner-run Mac build — failed; source correction awaiting retry
+
+The owner supplied the output from `./scripts/run-macos.command` on the M1 Mac.
+It reports Xcode 26.6 build 17F113, Apple Swift 6.3.3
+(`swiftlang-6.3.3.1.3 clang-2100.1.1.101`), an arm64 macOS target and
+`MacOSX26.5.sdk`. This is owner-provided execution evidence, not a cloud-native run.
+
+- **Failed:** compilation during `swift test` stopped because
+  `AVCaptureSession.Preset.inputPriority` is explicitly unavailable on macOS.
+  Eight repeated error messages refer to the same two preset references.
+- **Warning:** a non-Sendable shutdown completion was converted to the main
+  queue's actor-isolated Sendable block; this warning was repeated four times.
+- The final `error: fatalError` is the build failure summary. No Core test counts,
+  Release build, app launch, signing or camera validation completed in this log.
+- **Source corrected:** removed the preset guard/assignment; retained direct
+  `activeFormat`/frame durations. Shutdown completion is explicitly
+  `@MainActor @Sendable` through both layers and dispatched once at the pipeline
+  boundary. Apple documentation and the pasted SDK header confirm the platform
+  mismatch; no checks were disabled or warnings suppressed.
+- **Cloud regression:** all ten existing Core XCTest cases passed (0 failed/
+  skipped), all eight native source files syntax-parse, and an isolated GCD
+  callback handoff type-check passed with `-swift-version 5
+  -strict-concurrency=complete -warnings-as-errors` under Swift 6.0.3. The latter
+  verifies only the callback contract, not AppKit/AVFoundation or the full app.
+- **Unrun:** owner Mac rebuild after this patch. The compiler error/warning are
+  addressed in source but their removal on Apple Swift 6.3.3 is not yet confirmed.
+
+Next: update the existing feature checkout with `git pull --ff-only` and rerun
+`./scripts/run-macos.command`. No new clone, tool reinstall, cache deletion or
+local agent access is required. Raw user build logs/home paths are not committed.
+
+## Milestone 1 — executed validation
+
+| Check | Outcome | Evidence / boundary |
+| --- | --- | --- |
+| Official Linux Swift toolchain | Verified and usable | Swift 6.0.3 Ubuntu 24.04 x86_64 archive used on Debian 13 cloud; detached release signature verified, expected fingerprint `52BB7E3DE28A71BE22EC05FFEF80A866B47A981F`; official Swift website repository keys over HTTPS |
+| Core build and tests | **10 XCTest cases passed, 0 failed, 0 skipped** | Five observation/topology/confidence/palm/coordinate tests, five timing/freshness/statistics/cadence/CPU tests. Swift Testing footer separately reports zero tests; it is not the XCTest suite |
+| Native source syntax | Passed parse only | `swiftc -frontend -parse Sources/TapDrumApp/*.swift`; does not type-check Apple frameworks, SwiftUI or Darwin APIs |
+| App property list | Parsed and inspected | Python plistlib; bundle executable and macOS 14 floor match, camera purpose present, no microphone/library permission declaration |
+| Build/run shell scripts | Syntax check passed | `bash -n scripts/build-macos.sh scripts/run-macos.command`; not a native build/signing test |
+| Linux platform guard | Expected refusal verified | Build script exits 1 with macOS requirement, creates no fake `.app` bundle; this is expected behavior, not a native test failure |
+| Documentation validation | Passed | All 18 Markdown files and 39 local links checked; fences/newlines/whitespace valid; tracked diff whitespace check clean |
+| Installer repeatability on current cache | Passed | Helper reverified release fingerprint, reused installed toolchain and ran all ten tests; no fresh restored instance tested |
+| Swift cache setup | Initial setup failure resolved | Default compiler cache pointed outside writable roots. Supported cache/module/config/security paths moved to cloud scratch; tests then built and passed without changing HOME |
+| Reusable environment config | start_skill saved; installer draft rejected | Full installer/start draft received `ASB rejected the draft request`, no detailed reason and no save. Subsequent retained-toolchain startup-only draft saved successfully; no install_script or publication claim |
+| Native compile/capture/preview | **Owner compile failed; patched-source rebuild pending** | Failure and SDK details above. Linux still excludes the app target; app launch/camera tests remain unrun |
+| Tracking quality/resource values | **Unmeasured** | Preview alignment, chirality/mirroring, permissions/reconnection, Vision throughput, Mach CPU/footprint calls, thermal/pressure and soak tests require owner checklist |
+| M1 Git review delivery | Draft PR #2 opened | Feature branch pushed; stacked on unmerged M0 branch for focused review. No merge or accepted milestone tag; source/doc commits remain reviewable |
+
+Core command was run from `/workspace/tapdrum` with the retained Swift toolchain
+and writable compiler/module/config/security caches described in
+[BUILD_AND_RUN.md](BUILD_AND_RUN.md). Tests exited zero with all ten intended
+XCTest cases executed. They do not test real camera frames or native integrations.
+
+M1 remains unaccepted. There are no strike, MIDI, Logic, audio or AU implementations
+to validate, and no physical contact→sound latency claim. No microphone, footage
+recording or retained raw landmark trajectories were used. No paid macOS CI run
+or native build is implied by this report.
+
+## Historical Milestone 0 observations
 
 | Check | Outcome | Evidence / limit |
 | --- | --- | --- |
@@ -23,9 +124,9 @@ Date: 2026-10-27. Scope: Milestone 0 documentation/research only.
 | Git commit/push/PR delivery | Passed for initial documentation delivery | Commit `6f362cd` pushed to feature branch; draft PR #1 created and queried OPEN/isDraft=true, base main, head docs/milestone-0-feasibility. Follow-up documentation records the later source/version findings |
 | Main branch preservation | Verified at PR check | Remote main remained `e60421f8e60815828a83a9ee12a8f63fc074476f`; no merge, force push or branch deletion |
 
-## Not run
+## Historical Milestone 0 unrun checks
 
-No application test suite exists. No Swift build, camera preview, hand inference,
+At M0 no application test suite existed. No Swift build, camera preview, hand inference,
 calibration, strike classification, CoreMIDI send/receive, Logic recording/audio
 bounce, AU validation, CPU/memory profile, or physical end-to-end latency test was
 run. No footage/audio recordings or microphone processing were performed. No

@@ -9,7 +9,7 @@ No camera or microphone recording is requested or authorized.
 | --- | --- |
 | Computer | Owner reports MacBook Pro M1, 2020, 8 GB memory |
 | macOS | Owner reports **26.5.2**; exact version/build not independently inspected |
-| Xcode | Owner reports version 26.6 after initially reporting a download; installation/first launch/active SDK not independently checked |
+| Xcode | Owner's build output confirms 26.6 build 17F113, Apple Swift 6.3.3, MacOSX26.5 SDK and arm64 target. Compilation started but failed on an application API error; corrected source awaits rebuild |
 | Logic Pro | Owner reports 10.7.2; operation on the reported macOS and integration not verified |
 | iPhone | Owner reports iPhone 17 Pro, 512 GB |
 | iOS | Owner reports 26.6.2; actual Continuity operation not verified |
@@ -22,10 +22,11 @@ No camera or microphone recording is requested or authorized.
 ## H0: version checks (before architecture finalization)
 
 Logic/iOS/Xcode versions and the cable have now been supplied; do not repeatedly
-ask for them. Once Xcode installation is complete, open it for Apple's normal
-first-run setup and verify the active toolchain with the checks below. The
-remaining setup question is camera mounting/angle. No Apple account credentials
-or device serial numbers are needed.
+ask for them. The first native compiler output now confirms the installed active
+Xcode/compiler/SDK; the read-only commands below remain available if those tools
+change. The remaining setup question is camera mounting/angle, plus a successful
+native rebuild after correcting the capture preset error. No Apple account
+credentials or device serial numbers are needed.
 
 Apple's retrieved Xcode support table lists Xcode 26.6 as hosted on macOS Tahoe
 26.2–26.x, with the macOS 26.5 SDK and Swift 6.3 compiler. The owner's reported
