@@ -54,6 +54,11 @@ or images are saved. Nine new Core tests cover geometry and selection states.
 This first M2 foundation is within the owner's correction/calibration request;
 it does not assert M1 acceptance, strike recognition or MIDI readiness.
 
+The existing 10 Hz publisher is for display only. A future strike engine must
+consume every accepted tracker result and source/host timestamps on the processing
+path before publication; using SwiftUI's throttled snapshots would sacrifice
+temporal resolution. No inference throttling is added by calibration.
+
 The first Mac build exposed an unsupported preset reference: `.inputPriority`
 is not a macOS API. Capture now sets device `activeFormat` and min/max frame
 durations inside `beginConfiguration`/`commitConfiguration`, without setting

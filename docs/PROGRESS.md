@@ -16,6 +16,11 @@ on capture changes/stalls and requires manual reset after camera movement.
 **25 Core tests pass**; Mac source syntax parses. Updated native app compile,
 projection/click alignment and calibration invalidation need the owner's Mac.
 
+Draft [PR #3](https://github.com/kukreti2793/tapdrum/pull/3) targets the M1 feature
+branch for a focused area-calibration diff. Do not merge into that branch; retarget
+to main after approved prerequisite merges. The cloud `start_skill` draft was
+refreshed for this branch and its 25 Core tests; saving did not publish a snapshot.
+
 Follow [CALIBRATION.md](CALIBRATION.md). Keep the fixed angle and 720p/30 baseline;
 do not repeat optional lower-resolution work without evidence. First verify wrist
 and fingertip markers align, then select four area corners in order, test both
@@ -26,6 +31,9 @@ This is a bounded foundation requested by the owner, not a claim M1 passed or
 M2 strike recognition is complete. After native geometry validation, the next
 recognition work is per-contact resting/released references and labeled temporal
 strike experiments; MIDI/Logic recording remain gated by those results.
+Future strike classification must consume every accepted tracker result with its
+source/host timestamps before the 10 Hz UI publisher; displayed snapshots are
+insufficient for rapid drumming. This branch adds no analysis-frame skipping.
 
 ## Current trial review — accessible recording inspected
 

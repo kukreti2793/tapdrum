@@ -20,6 +20,11 @@ native Mac acceptance pending. Historical M0 research evidence is retained below
 Next owner procedure is [CALIBRATION.md](CALIBRATION.md). Do not promote the
 successful original runtime or these Core tests to native acceptance of new code.
 
+Calibration branch pushed and draft PR #3 opened against the M1 branch. No merge
+or tested milestone tag made. Cloud startup instructions for the retained verified
+toolchain and 25 tests were saved and persistence confirmed; no publication/new
+restored-task validation or fresh install is claimed.
+
 ## Replacement trial reviewed; preview correction awaiting native retest
 
 See [TRIAL_2026_10_27.md](TRIAL_2026_10_27.md). Replacement upload: 29,824,670 bytes,
