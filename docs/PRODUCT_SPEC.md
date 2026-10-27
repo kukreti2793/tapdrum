@@ -1,6 +1,7 @@
 # Product specification
 
-Status: owner requirements captured; implementation and compatibility unverified.
+Status: owner requirements captured; M1 implementation approved and tracking source
+written. Native build, tracking acceptance and compatibility remain unverified.
 Date: 2026-10-27. Working name: **TapDrum**. “VisionDrum” in the supplied workflow
 is treated as a descriptive placeholder; final product naming is undecided.
 
@@ -73,6 +74,7 @@ recording must be explicit, local, bounded, and deletable. Never place heavy wor
 on a real-time audio thread. Keep resource usage compatible with an 8 GB Mac
 running Logic; demonstrate this with measurements rather than model claims.
 
-Do not build the complete application now. Milestone 0 produces recommendations
-and tests. Each later milestone needs acceptance evidence and owner approval to
-advance. See [the implementation plan](IMPLEMENTATION_PLAN.md).
+Do not build the complete application at once. Milestone 0 recommendations were
+reviewed and the owner explicitly approved M1. Only tracking is implemented now;
+its native acceptance is pending. Each later milestone needs acceptance evidence
+and owner approval to advance. See [the implementation plan](IMPLEMENTATION_PLAN.md).

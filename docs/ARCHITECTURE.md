@@ -1,9 +1,42 @@
-# Architecture recommendation — provisional
+# Architecture and implemented Milestone 1 boundaries
 
-Status: Milestone 0 proposal, **not approved or implemented**. Final selection is
-pending target-Mac/SDK validation and owner review. Owner-reported tool versions
-and direct Apple documentation have now been recorded; they do not establish
-working native integration. Related choices are in [DECISIONS.md](DECISIONS.md).
+Status: owner approved the proposed Milestone 1 direction on 2026-10-27. Capture,
+Vision adapter, preview and numerical/resource diagnostics are implemented in
+source. Native build and hardware behavior are **unverified**. All strike/MIDI/
+plugin paths below remain future designs. See [DECISIONS.md](DECISIONS.md).
+
+## Actual source layout
+
+| Files | Implemented responsibility |
+| --- | --- |
+| `Package.swift` | macOS 14+, Swift tools 5.9/Swift 5 mode; dependency-free Core library/tests; native executable target included only on macOS |
+| `Sources/TapDrumCore/HandObservation.swift` | Validated 21-joint observations, anatomical labels, confidence filtering, five-anchor palm proxy and coordinate-origin conversion |
+| `Sources/TapDrumCore/Diagnostics.swift` | Timestamp/freshness rules, fixed-capacity numerical statistics, analyzed cadence and process CPU deltas |
+| `Sources/TapDrumApp/CapturePipeline.swift` | Device/format discovery, camera-only session setup, synchronous bounded-inflight analysis with late-frame discard, per-run delegates and interruption/error recovery |
+| `Sources/TapDrumApp/VisionHandTracker.swift` | Replaceable tracker protocol, two-hand VN request, explicit finger mapping and frame-scoped chirality; no persistent track IDs |
+| `Sources/TapDrumApp/CameraModel.swift` | Main-actor controls, permission/run tokens, stale-overlay policy and periodic resource updates |
+| `Sources/TapDrumApp/CameraPreview.swift` | Native preview layer, confidence-gated skeleton/finger labels/palm ring, native coordinate conversion and preview-only mirroring |
+| `Sources/TapDrumApp/ResourceSampler.swift` | Darwin process CPU and physical footprint plus thermal state; no native measurements run here |
+| `Sources/TapDrumApp/ContentView.swift`, `TapDrumApp.swift` | Controls, diagnostics, app lifecycle and orderly asynchronous stop on quit |
+| `Resources/Info.plist`, `scripts/` | Camera-only local `.app` packaging/ad-hoc signature and build/run entry points; native execution pending |
+
+The capture queue runs both session mutation and per-frame inference. The output
+drops late frames while inference blocks that queue; there is no custom pending
+frame list. Numerical/overlay updates are throttled to 10 Hz. A per-run delegate
+token rejects old callbacks after restart, and UI permission/snapshot tokens reject
+old completions. Retained numeric histories cap at 240 values; frames and raw
+landmark histories are not written to disk. The current observation is transient.
+
+Freshness uses a 250 ms threshold evaluated on incoming UI snapshots and a 250 ms
+timer, so a silent camera's overlay may take roughly 500 ms to clear when the main
+thread is responsive. This is a display policy, not a real-time latency guarantee.
+Camera switching is explicit Stop→select→Start. Only landscape with zero output
+rotation is supported initially; rotate/reposition only between runs. Automatic
+cross-frame identity association, calibration and all musical output are absent.
+
+Native behavior, coordinate alignment, Vision API type-checking, privacy prompts,
+resource calls and local signing need the owner's Mac; Linux Core tests cannot
+establish these. See [BUILD_AND_RUN.md](BUILD_AND_RUN.md).
 
 ```mermaid
 flowchart LR

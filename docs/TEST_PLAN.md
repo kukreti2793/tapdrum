@@ -1,8 +1,10 @@
 # Test plan and acceptance protocols
 
-Status: planned, not executed. Numerical gates below are **proposals for owner
-review**, not measured results or newly imposed product guarantees. Active scope
-is Milestone 0. Do not start implementation to run these tests without approval.
+Status: M1 source implemented after explicit approval; ten Core tests executed,
+native acceptance unrun. Numerical gates below are **proposals for owner review**,
+not measured results or product guarantees. Active scope is M1. No M2 approval.
+See [actual results](TEST_RESULTS.md), [build/run steps](BUILD_AND_RUN.md), and
+[the first native checklist](MILESTONE_1_CHECKLIST.md).
 
 ## Evidence rules and current privacy boundary
 

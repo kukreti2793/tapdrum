@@ -1,8 +1,36 @@
 # Test and research results
 
-Date: 2026-10-27. Scope: Milestone 0 documentation/research only.
+Date: 2026-10-27. Current scope: approved Milestone 1 source implementation;
+native Mac acceptance pending. Historical M0 research evidence is retained below.
 
-## Executed observations
+## Milestone 1 — executed validation
+
+| Check | Outcome | Evidence / boundary |
+| --- | --- | --- |
+| Official Linux Swift toolchain | Verified and usable | Swift 6.0.3 Ubuntu 24.04 x86_64 archive used on Debian 13 cloud; detached release signature verified, expected fingerprint `52BB7E3DE28A71BE22EC05FFEF80A866B47A981F`; official Swift website repository keys over HTTPS |
+| Core build and tests | **10 XCTest cases passed, 0 failed, 0 skipped** | Five observation/topology/confidence/palm/coordinate tests, five timing/freshness/statistics/cadence/CPU tests. Swift Testing footer separately reports zero tests; it is not the XCTest suite |
+| Native source syntax | Passed parse only | `swiftc -frontend -parse Sources/TapDrumApp/*.swift`; does not type-check Apple frameworks, SwiftUI or Darwin APIs |
+| App property list | Parsed and inspected | Python plistlib; bundle executable and macOS 14 floor match, camera purpose present, no microphone/library permission declaration |
+| Build/run shell scripts | Syntax check passed | `bash -n scripts/build-macos.sh scripts/run-macos.command`; not a native build/signing test |
+| Linux platform guard | Expected refusal verified | Build script exits 1 with macOS requirement, creates no fake `.app` bundle; this is expected behavior, not a native test failure |
+| Documentation validation | Passed | All 18 Markdown files and 39 local links checked; fences/newlines/whitespace valid; tracked diff whitespace check clean |
+| Installer repeatability on current cache | Passed | Helper reverified release fingerprint, reused installed toolchain and ran all ten tests; no fresh restored instance tested |
+| Swift cache setup | Initial setup failure resolved | Default compiler cache pointed outside writable roots. Supported cache/module/config/security paths moved to cloud scratch; tests then built and passed without changing HOME |
+| Reusable environment config | start_skill saved; installer draft rejected | Full installer/start draft received `ASB rejected the draft request`, no detailed reason and no save. Subsequent retained-toolchain startup-only draft saved successfully; no install_script or publication claim |
+| Native compile/capture/preview | **Unrun — Mac required** | App target deliberately excluded from Linux package; no xcodebuild or macOS SDK here |
+| Tracking quality/resource values | **Unmeasured** | Preview alignment, chirality/mirroring, permissions/reconnection, Vision throughput, Mach CPU/footprint calls, thermal/pressure and soak tests require owner checklist |
+
+Core command was run from `/workspace/tapdrum` with the retained Swift toolchain
+and writable compiler/module/config/security caches described in
+[BUILD_AND_RUN.md](BUILD_AND_RUN.md). Tests exited zero with all ten intended
+XCTest cases executed. They do not test real camera frames or native integrations.
+
+M1 remains unaccepted. There are no strike, MIDI, Logic, audio or AU implementations
+to validate, and no physical contact→sound latency claim. No microphone, footage
+recording or retained raw landmark trajectories were used. No paid macOS CI run
+or native build is implied by this report.
+
+## Historical Milestone 0 observations
 
 | Check | Outcome | Evidence / limit |
 | --- | --- | --- |
@@ -23,9 +51,9 @@ Date: 2026-10-27. Scope: Milestone 0 documentation/research only.
 | Git commit/push/PR delivery | Passed for initial documentation delivery | Commit `6f362cd` pushed to feature branch; draft PR #1 created and queried OPEN/isDraft=true, base main, head docs/milestone-0-feasibility. Follow-up documentation records the later source/version findings |
 | Main branch preservation | Verified at PR check | Remote main remained `e60421f8e60815828a83a9ee12a8f63fc074476f`; no merge, force push or branch deletion |
 
-## Not run
+## Historical Milestone 0 unrun checks
 
-No application test suite exists. No Swift build, camera preview, hand inference,
+At M0 no application test suite existed. No Swift build, camera preview, hand inference,
 calibration, strike classification, CoreMIDI send/receive, Logic recording/audio
 bounce, AU validation, CPU/memory profile, or physical end-to-end latency test was
 run. No footage/audio recordings or microphone processing were performed. No

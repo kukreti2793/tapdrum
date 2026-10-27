@@ -1,7 +1,10 @@
 # Requirements and traceability
 
-All product requirements below are **unimplemented**. Acceptance references are
-planned tests in [TEST_PLAN.md](TEST_PLAN.md); they are not passing results.
+M1 source implements camera controls/preview, Vision observations, palm proxy,
+confidence and numerical/resource diagnostics for CAM/VIS/UX/PERF/PRIV subsets.
+Ten shared-logic tests pass; **native requirements are not accepted yet**. All
+strike/calibration/MIDI/preset/DAW/AU requirements remain unimplemented. Acceptance
+references in [TEST_PLAN.md](TEST_PLAN.md) are plans, not hardware passing results.
 
 | ID | Required behavior | Milestone | Acceptance evidence |
 | --- | --- | --- | --- |

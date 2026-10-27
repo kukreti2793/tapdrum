@@ -1,8 +1,49 @@
 # Project progress and handoff
 
-Updated: 2026-10-27. Active milestone: **0 — requirements and feasibility**.
-Status: research/documentation prepared for review; architecture and implementation
-approval pending. No application code, build target, installed model, or instrument exists.
+Updated: 2026-10-27. Active milestone: **1 — camera and hand tracking**.
+Owner approved proceeding (“approved. go ahead”). Capture/tracking prototype
+source and shared tests are implemented. **Native build and target-Mac acceptance
+are pending**. No strikes, MIDI, sound engine, plugin or microphone is implemented.
+
+## Current implementation and next task
+
+- Branch: `feat/milestone-1-hand-tracking`, based on the unmerged M0 documentation
+  branch. Keep M1 review separate; do not merge either PR without owner approval.
+- SwiftPM/Core/App separation with a macOS 14 deployment floor, tools 5.9/Swift 5
+  language mode, no third-party packages/models. Source implements supported-mode
+  camera selection, live preview/mirroring, two-hand Vision landmarks/finger labels,
+  confidence/palm proxy, frame and CPU/footprint/thermal/pressure diagnostics.
+- Serial capture/inference, late-frame discard, per-run delegate and permission
+  tokens, confidence filtering, timestamp ordering and bounded numeric histories.
+  Overlay freshness threshold is 250 ms with a 250 ms UI timer, not a hard deadline.
+- Camera-only/no-recordings: no audio input, microphone permission, file recording,
+  retained raw landmark trajectories, MIDI or network inference.
+- Ten Core XCTest cases pass under a signature-verified official Swift 6.0.3 Linux
+  toolchain; native source syntax parsed only. Plist/shell/platform-guard checks pass.
+  Mac API type-checking and real-camera behavior cannot be established in cloud.
+- Concrete Mac packaging/run scripts and a text-only acceptance checklist are in
+  [BUILD_AND_RUN.md](BUILD_AND_RUN.md) and [MILESTONE_1_CHECKLIST.md](MILESTONE_1_CHECKLIST.md).
+
+Next: owner builds/runs on the Mac, returns the first compiler/startup error or
+the checklist's numerical/qualitative results; fix any native failures, then
+evaluate C1/V1. Stable tracking acceptance and **new explicit approval** are
+required before Milestone 2. Do not ask again for already supplied versions or cable.
+
+## Reusable cloud setup
+
+The verified Linux toolchain/archive/cache are retained under cloud scratch,
+outside Git. A full installer draft was rejected by the approval service with
+“ASB rejected the draft request” and no reason; no installer save was confirmed.
+A narrower **start_skill save succeeded**, activating the retained verified
+toolchain and running the ten Core tests without a new download. No install_script
+was saved; no cloud services are needed. The installer helper was exercised
+successfully on the current cached setup, but fresh-instance reinstall is not
+claimed. Review/save the startup draft in environment settings and publish when
+appropriate; this task did not publish or validate a newly restored task.
+
+The current instance supports Core development/tests, not native instrument
+acceptance. A missing toolchain after restoration remains a setup prerequisite;
+never bypass signature checks or silently substitute native validation.
 
 ## Repository and task baseline
 
@@ -13,7 +54,8 @@ read found the owner's initial README commit on GitHub main:
 
 The native product master prompt superseded the earlier approved browser pad
 suggestion before any browser or native application implementation was created.
-This task is limited to Milestone 0. See `DECISIONS.md` for owner constraints.
+The initial task was limited to Milestone 0. Its proposal was subsequently approved
+for narrow Milestone 1 implementation. See `DECISIONS.md` for owner constraints.
 
 ## Prepared
 
@@ -28,10 +70,10 @@ This task is limited to Milestone 0. See `DECISIONS.md` for owner constraints.
   iPhone 17 Pro 512 GB; subsequently Logic Pro 10.7.2, Xcode 26.6, iOS 26.6.2 and
   original data cable. Camera-only/no-recording choice applied. Official Xcode
   support table includes the reported host range; native operation is unverified.
-- Environment research/API domain additions saved as a draft. No install/start
-  script is needed for documentation-only work; native setup is not complete.
+- Environment research/API domain additions were saved for M0. At M1 the startup
+  activation instructions described above were saved; native setup remains unverified.
 
-## Still required before architecture finalization / implementation
+## Remaining native validation
 
 1. Remaining setup: camera mount/angle and native Xcode installation/active SDK
    verification. Do not repeat answered version/cable questions. Audio configuration
@@ -39,15 +81,14 @@ This task is limited to Milestone 0. See `DECISIONS.md` for owner constraints.
 2. Inspect the selected SDK/native tool activation; official Apple API research is
    complete for this proposal. Google guide access is still blocked, but its
    primary API/license sources were read; no MediaPipe deployment is selected.
-3. Owner reviews the provisional architecture and feasibility criteria. Explicit
-   approval is required to begin Milestone 1; this documentation does not imply it.
+3. M1 implementation approval is recorded. Native acceptance is still required;
+   do not confuse that approval with passed C1/V1 tests or permission for M2.
 4. Later, run native builds and live hardware tests on the actual Mac. Linux
    documentation checks are not evidence of compatibility or instrument readiness.
 
-The next recommended implementation task, **only after approval**, is a narrow
-native capture/hand-tracking prototype with no strikes, MIDI, microphone, sampler,
-plugin or recordings. Exact physical contact-to-audio latency has no approved
-measurement method under the current no-recording constraint and remains open.
+Exact physical contact-to-audio latency has no approved measurement method under
+the current no-recording constraint and remains open. Source for the approved
+tracking prototype exists; do not recreate it from scratch next session.
 
 Draft [PR #1](https://github.com/kukreti2793/tapdrum/pull/1) is open from
 `docs/milestone-0-feasibility` into `main`. Branch push and PR state were verified;
