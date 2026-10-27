@@ -9,6 +9,9 @@ are pending**. No strikes, MIDI, sound engine, plugin or microphone is implement
 
 - Branch: `feat/milestone-1-hand-tracking`, based on the unmerged M0 documentation
   branch. Keep M1 review separate; do not merge either PR without owner approval.
+- Draft [PR #2](https://github.com/kukreti2793/tapdrum/pull/2) contains this M1
+  implementation and targets the M0 branch for a focused diff. After an approved
+  PR #1 merge, retarget #2 to main; do not merge M1 into the documentation branch.
 - SwiftPM/Core/App separation with a macOS 14 deployment floor, tools 5.9/Swift 5
   language mode, no third-party packages/models. Source implements supported-mode
   camera selection, live preview/mirroring, two-hand Vision landmarks/finger labels,

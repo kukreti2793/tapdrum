@@ -19,6 +19,7 @@ native Mac acceptance pending. Historical M0 research evidence is retained below
 | Reusable environment config | start_skill saved; installer draft rejected | Full installer/start draft received `ASB rejected the draft request`, no detailed reason and no save. Subsequent retained-toolchain startup-only draft saved successfully; no install_script or publication claim |
 | Native compile/capture/preview | **Unrun — Mac required** | App target deliberately excluded from Linux package; no xcodebuild or macOS SDK here |
 | Tracking quality/resource values | **Unmeasured** | Preview alignment, chirality/mirroring, permissions/reconnection, Vision throughput, Mach CPU/footprint calls, thermal/pressure and soak tests require owner checklist |
+| M1 Git review delivery | Draft PR #2 opened | Feature branch pushed; stacked on unmerged M0 branch for focused review. No merge or accepted milestone tag; source/doc commits remain reviewable |
 
 Core command was run from `/workspace/tapdrum` with the retained Swift toolchain
 and writable compiler/module/config/security caches described in

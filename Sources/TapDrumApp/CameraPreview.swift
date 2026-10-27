@@ -38,7 +38,7 @@ final class PreviewView: NSView {
         layer?.addSublayer(overlay)
     }
 
-    required init?(coder: NSCoder) { nil }
+    required init?(coder: NSCoder) { return nil }
 
     override func layout() {
         super.layout()
