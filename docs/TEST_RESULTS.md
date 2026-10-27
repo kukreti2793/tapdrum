@@ -3,6 +3,23 @@
 Date: 2026-10-27. Current scope: approved Milestone 1 source implementation;
 native Mac acceptance pending. Historical M0 research evidence is retained below.
 
+## Replacement trial reviewed; preview correction awaiting native retest
+
+See [TRIAL_2026_10_27.md](TRIAL_2026_10_27.md). Replacement upload: 29,824,670 bytes,
+H.264, 1280×800 screen capture, duration 30.3167 s, no audio stream. Eleven sampled
+frames and three full-resolution frames reviewed. Running iPhone 720p/30 preview
+observed with cutoff 0.72; persistent vertical skeleton reflection identified.
+At 6/18/30 s: ~30 analyzed fps, 0 displayed drops, 1 rejected, 0 Vision failures;
+Vision p50 9.5–10.0 ms/p95 14.3–14.6 ms; PTS age p50 52.9–53.3 ms. CPU 42.2–45.1%
+of one core; footprint 80.1–80.5 MiB; thermal nominal; last pressure event Warning.
+These are sampled rolling displays, not distributions or contact-to-sound timing.
+
+Source correction uses lower-left normalized projection into the actual image
+rectangle; native retest pending. Six projection tests added; no model smoothing,
+confidence rewriting, resolution reduction or inference throttling. All 16 current
+Core XCTest cases passed with 0 failures/skips. No footage or
+extracted images committed. Earlier transfer failure below is historical.
+
 ## Owner-reported M1 trial — recording review blocked
 
 The owner reports running a trial with overlay confidence 0.72 and prefers to keep

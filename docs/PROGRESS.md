@@ -3,31 +3,35 @@
 Updated: 2026-10-27. Active milestone: **1 — camera and hand tracking**.
 Owner approved proceeding (“approved. go ahead”). Capture/tracking prototype
 source and shared tests are implemented. After the first native build failure and
-source correction, the owner now reports a live M1 trial. **Visual trial review
-is blocked by the uploaded recording's size; tracking acceptance remains pending.**
+source correction, the owner now reports a live M1 trial. **The clip is now reviewed; a vertical overlay bug is patched in source and
+tracking acceptance remains pending a native correction retest.**
 No strikes, MIDI, sound engine, plugin or microphone is implemented.
 
-## Current trial review — awaiting accessible evidence
+## Current trial review — accessible recording inspected
 
-The owner supplied a screen recording, wants to keep the shown camera angle fixed,
-used overlay confidence 0.72, and requested necessary accuracy/calibration work
-and further progress. The file transfer tool refused the recording because it
-exceeds its 32 MiB maximum. No frames, camera angle, diagnostics or tracking errors
-were inspected. A shorter exported clip below the limit is the remaining input.
+Read [TRIAL_2026_10_27.md](TRIAL_2026_10_27.md) for the sampled evidence and exact
+rolling diagnostics. The replacement 29.8 MB clip was inspected at 0, 3, …, 30 s,
+with full-resolution checks at 6, 18, 30 s. It shows a running iPhone 720p/30
+preview and one right-hand estimate at overlay cutoff 0.72. No two-hand/contact
+acceptance or frame-level accuracy metric is established.
 
-Source inspection confirms the slider only filters displayed joints, connecting
-lines and the five-anchor palm proxy. It is not passed to Vision's pose request,
-does not calibrate the table and is not an accuracy percentage or strike threshold.
-Do not invent smoothing/contact thresholds or change the app default based only
-on the reported value. Preserve this angle preference until its evidence can be
-reviewed; do not ask the owner to reposition without a reason from the trial.
+A persistent vertical overlay reflection is visible at rest. Corrected source
+projects lower-left Vision points directly into the preview image rectangle,
+with explicit mirroring/letterbox handling, plus six geometry tests. Raw model
+output is unchanged. The cutoff is now remembered; new installs default to 0.72.
+Finger names can be hidden, and zero-visible-joint pose estimates are labeled
+honestly. Native correction validation remains pending on the owner's Mac.
 
-Next: review an accessible short clip with preview and diagnostics visible, record
-qualitative alignment/identity/loss findings, make evidence-backed M1 corrections,
-then progress to necessary guided calibration/strike feasibility under the owner's
-request. Do not skip the tracking/measurement gates or infer their results from
-the mere presence of a video upload. No additional approval is needed just to
-inspect the explicitly supplied trial. No automatic app recording is authorized.
+Owner clarified that lower resolution was only a suggestion: accuracy, temporal
+sampling and low latency take priority. Keep 720p/30; no reduction shortcut,
+inference rate cap, smoothing or unmeasured CPU improvement. Current clip shows
+~30 analyzed fps, ~10/14–15 ms Vision p50/p95, ~53 ms frame PTS age and ~0.43 core
+CPU. Frame age is the timing concern to investigate separately from processing.
+
+The request authorizes necessary calibration/progress after reviewing the trial.
+Next bounded work is guided session-only playing-area geometry, without claiming
+height/contact or skipping tracking/recognition acceptance. Supplied footage is
+outside Git; no app recording or microphone is authorized.
 
 ## First Mac build diagnosis and correction
 

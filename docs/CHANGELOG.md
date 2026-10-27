@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased — 2026-10-27 — reviewed trial and preview correction
+
+- Reviewed the accessible 30-second trial; recorded one-hand iPhone 720p/30
+  behavior, visible rolling diagnostics and limits in TRIAL_2026_10_27.md.
+- Corrected vertical overlay registration with explicit lower-left projection;
+  added six geometry regression tests. Raw Vision output remains unchanged.
+- Remember overlay cutoff (default 0.72), make finger names optional and distinguish
+  raw pose estimates from estimates with visible joints.
+- Preserve 720p/30 and temporal sampling per owner priority; no resolution shortcut,
+  inference throttle or smoothing added. Native retest remains required.
+
 ## Unreleased — 2026-10-27 — owner trial review pending
 
 - Recorded owner-reported live trial, fixed camera-angle preference, overlay cutoff

@@ -9,7 +9,7 @@ and errors as text. Do not save video/audio or raw landmark trajectories.
 
 1. Follow [BUILD_AND_RUN.md](BUILD_AND_RUN.md) using the feature branch. Note the
    commit (`git rev-parse --short HEAD`), `sw_vers`, `xcodebuild -version` and
-   `xcrun --sdk macosx --show-sdk-version` outputs. The script should run 10 Core
+   `xcrun --sdk macosx --show-sdk-version` outputs. The script should run 16 Core
    tests, finish a native Release build, verify the local signature, and open TapDrum.
 2. Choose the built-in camera and start. Check that macOS asks only for Camera.
    After allowing it, confirm live preview and landmark alignment with one hand,
@@ -52,7 +52,7 @@ and any measurement limitations with the owner before advancing.
 
 ```text
 Commit / macOS build / active Xcode and SDK:
-Build and 10 Core tests: passed / failed (first error)
+Build and 16 Core tests: passed / failed (first error)
 Camera, mode, landscape angle/mount, wired/wireless confirmed or unknown:
 Both hands / finger labels / mirror and resize alignment:
 Tracking loss / crossing / disconnect / restart / quit observations:

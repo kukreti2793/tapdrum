@@ -13,7 +13,14 @@ final class CameraModel: ObservableObject {
     }
     @Published var selectedModeID = ""
     @Published var mirrorPreview = false
-    @Published var minimumConfidence = 0.3
+    @Published var showFingerLabels = true
+    @Published var minimumConfidence = 0.72 {
+        didSet {
+            if minimumConfidence.isFinite, (0...1).contains(minimumConfidence) {
+                UserDefaults.standard.set(minimumConfidence, forKey: "overlayMinimumConfidence")
+            }
+        }
+    }
     @Published private(set) var phase: CapturePhase = .stopped
     @Published private(set) var hands: [HandObservation] = []
     @Published private(set) var diagnostics = FrameDiagnostics()
@@ -44,6 +51,10 @@ final class CameraModel: ObservableObject {
     var canConfigure: Bool { !phase.isRunning && !phase.isBusy }
 
     init() {
+        if UserDefaults.standard.object(forKey: "overlayMinimumConfidence") != nil {
+            let saved = UserDefaults.standard.double(forKey: "overlayMinimumConfidence")
+            if saved.isFinite, (0...1).contains(saved) { minimumConfidence = saved }
+        }
         timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.tick() }
         }

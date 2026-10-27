@@ -1,9 +1,9 @@
 # Known issues and open questions
 
-All items are open unless explicitly resolved. After a native compile error was
-patched, the owner reports a live M1 trial; the recording cannot yet be reviewed
-because of the transfer-size limit. No measured acceptance or fixed defect is
-inferred from uninspected footage.
+All items are open unless explicitly resolved. The replacement M1 trial recording
+was reviewed: native preview is running but its overlay is vertically reflected.
+Source correction needs a native retest. This single-hand clip does not establish
+full tracking/contact acceptance.
 
 | ID | Kind | Issue / next action |
 | --- | --- | --- |
@@ -26,8 +26,10 @@ inferred from uninspected footage.
 | K-17 | Profiling prerequisite | CPU/physical footprint/thermal/pressure source exists but native calls and app/Logic contention are unmeasured; BGRA fallback overhead and first advertised format choice need profiling |
 | K-18 | Confirmed defect; source patched, rebuild pending | Capture setup referenced `.inputPriority`, explicitly unavailable in the Mac SDK. Removed both preset references; retain direct device format/rate configuration. Native success not yet confirmed |
 | K-19 | Reported warning; source patched, rebuild pending | Shutdown completion was non-Sendable when handed to the main queue. Annotated `@MainActor @Sendable` through model/pipeline; main-queue dispatch now occurs at one boundary. Isolated strict type-check passes; Mac warning removal not yet confirmed |
-| K-20 | Trial evidence blocker | Owner's .mov exceeds 32 MiB transfer limit. Need smaller clip before visual diagnosis; angle, tracking behavior and diagnostics unseen |
-| K-21 | Interpretation constraint | Owner prefers the trial's fixed angle and overlay cutoff 0.72. Cutoff only hides joints/segments/palm anchors; not Vision tuning, calibration, accuracy or contact confidence. No angle-specific code adjustment yet justified |
+| K-20 | Resolved transfer blocker | Replacement 29.8 MB, 30.3-second clip downloaded and sampled; review in TRIAL_2026_10_27.md. Earlier oversize upload was not viewed |
+| K-21 | Interpretation constraint | Fixed oblique angle and 0.72 cutoff retained; cutoff is display filtering, not contact confidence. Native app runtime/one-hand preview now visually observed; exact build/tests and two-hand/strike accuracy not certified |
+| K-22 | Confirmed display defect; patched-source retest needed | Overlay vertically reflected at rest in reviewed clip. Corrected lower-left projection against actual preview rectangle, with mirror/letterbox tests; no model accuracy gain claimed until native retest |
+| K-23 | Timing prerequisite | Sampled PTS age ~53 ms before ~10 ms median inference; camera connection/buffering/clock meaning require controlled investigation. Not measured physical contact→sound latency |
 
 Resolved initial setup assumption: the repository is no longer remotely empty;
 the owner's README commit was fetched before creating this documentation branch.

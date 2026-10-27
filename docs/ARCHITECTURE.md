@@ -12,10 +12,11 @@ plugin paths below remain future designs. See [DECISIONS.md](DECISIONS.md).
 | `Package.swift` | macOS 14+, Swift tools 5.9/Swift 5 mode; dependency-free Core library/tests; native executable target included only on macOS |
 | `Sources/TapDrumCore/HandObservation.swift` | Validated 21-joint observations, anatomical labels, confidence filtering, five-anchor palm proxy and coordinate-origin conversion |
 | `Sources/TapDrumCore/Diagnostics.swift` | Timestamp/freshness rules, fixed-capacity numerical statistics, analyzed cadence and process CPU deltas |
+| `Sources/TapDrumCore/PreviewProjection.swift` | Explicit lower-left Vision→overlay image-rectangle projection and inverse clicks, including mirroring/letterbox offsets; fixes the reflected overlay in the reviewed trial |
 | `Sources/TapDrumApp/CapturePipeline.swift` | Device/format discovery, camera-only session setup, synchronous bounded-inflight analysis with late-frame discard, per-run delegates and interruption/error recovery |
 | `Sources/TapDrumApp/VisionHandTracker.swift` | Replaceable tracker protocol, two-hand VN request, explicit finger mapping and frame-scoped chirality; no persistent track IDs |
 | `Sources/TapDrumApp/CameraModel.swift` | Main-actor controls, permission/run tokens, stale-overlay policy and periodic resource updates |
-| `Sources/TapDrumApp/CameraPreview.swift` | Native preview layer, confidence-gated skeleton/finger labels/palm ring, native coordinate conversion and preview-only mirroring |
+| `Sources/TapDrumApp/CameraPreview.swift` | Native preview layer with image-rectangle lookup, confidence-gated skeleton/optional finger labels/palm ring, explicit lower-left projection and preview-only mirroring |
 | `Sources/TapDrumApp/ResourceSampler.swift` | Darwin process CPU and physical footprint plus thermal state; no native measurements run here |
 | `Sources/TapDrumApp/ContentView.swift`, `TapDrumApp.swift` | Controls, diagnostics, app lifecycle and orderly asynchronous stop on quit |
 | `Resources/Info.plist`, `scripts/` | Camera-only local `.app` packaging/ad-hoc signature and build/run entry points; native execution pending |

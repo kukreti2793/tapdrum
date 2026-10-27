@@ -18,7 +18,8 @@ struct ContentView: View {
                 VStack(alignment: .leading) {
                     ZStack {
                         CameraPreview(session: model.session, hands: model.hands,
-                                      mirrored: model.mirrorPreview, minimumConfidence: model.minimumConfidence)
+                                      mirrored: model.mirrorPreview, minimumConfidence: model.minimumConfidence,
+                                      showFingerLabels: model.showFingerLabels)
                         if !model.phase.isRunning || model.framesAreStale {
                             Text(model.framesAreStale ? "No recent frames · landmarks cleared" : "Press Start camera to begin")
                                 .padding().background(.black.opacity(0.8)).foregroundStyle(.white).clipShape(RoundedRectangle(cornerRadius: 8))
@@ -33,6 +34,7 @@ struct ContentView: View {
                     }
                     HStack {
                         Toggle("Mirror preview", isOn: $model.mirrorPreview).toggleStyle(.checkbox)
+                        Toggle("Finger names", isOn: $model.showFingerLabels).toggleStyle(.checkbox)
                         Spacer()
                         Text("Overlay confidence").font(.caption)
                         Slider(value: $model.minimumConfidence, in: 0...1).frame(width: 130)
@@ -80,7 +82,8 @@ struct ContentView: View {
     private var diagnostics: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Tracking").font(.headline)
-            Text("\(model.hands.count) hands detected")
+            let visibleHands = model.hands.filter { !$0.visibleJoints(minimumConfidence: model.minimumConfidence).isEmpty }.count
+            Text("\(model.hands.count) pose estimates · \(visibleHands) with visible joints")
             ForEach(Array(model.hands.enumerated()), id: \.offset) { _, hand in
                 VStack(alignment: .leading) {
                     Text(hand.handedness.label).font(.callout.bold())

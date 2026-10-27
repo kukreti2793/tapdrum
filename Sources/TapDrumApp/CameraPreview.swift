@@ -9,6 +9,7 @@ struct CameraPreview: NSViewRepresentable {
     let hands: [HandObservation]
     let mirrored: Bool
     let minimumConfidence: Double
+    let showFingerLabels: Bool
 
     func makeNSView(context: Context) -> PreviewView { PreviewView(session: session) }
 
@@ -16,6 +17,7 @@ struct CameraPreview: NSViewRepresentable {
         view.hands = hands
         view.mirrored = mirrored
         view.minimumConfidence = minimumConfidence
+        view.showFingerLabels = showFingerLabels
         view.needsLayout = true
     }
 }
@@ -26,6 +28,12 @@ final class PreviewView: NSView {
     var hands: [HandObservation] = []
     var mirrored = false
     var minimumConfidence = 0.3
+    var showFingerLabels = true
+    private var projection: PreviewProjection?
+    private var effectiveMirroring = false
+
+    // The overlay paths use lower-left coordinates, matching Vision's origin.
+    override var isFlipped: Bool { false }
 
     init(session: AVCaptureSession) {
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
@@ -52,17 +60,22 @@ final class PreviewView: NSView {
                 connection.automaticallyAdjustsVideoMirroring = false
                 connection.isVideoMirrored = mirrored
             }
+            effectiveMirroring = connection.isVideoMirroringSupported && connection.isVideoMirrored
         }
+        let imageRect = previewLayer.layerRectConverted(fromMetadataOutputRect: CGRect(x: 0, y: 0, width: 1, height: 1))
+        projection = PreviewProjection(x: imageRect.minX, y: imageRect.minY,
+                                       width: imageRect.width, height: imageRect.height)
         drawOverlay()
         CATransaction.commit()
     }
 
-    private func layerPoint(_ point: NormalizedPoint) -> CGPoint {
-        previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: point.x, y: point.captureDeviceY))
-    }
-
     private func drawOverlay() {
         overlay.sublayers?.forEach { $0.removeFromSuperlayer() }
+        guard let projection else { return }
+        func layerPoint(_ point: NormalizedPoint) -> CGPoint {
+            let p = projection.project(point, mirrored: effectiveMirroring)
+            return CGPoint(x: p.x, y: p.y)
+        }
         for hand in hands {
             let color: NSColor = hand.handedness == .left ? .systemGreen : hand.handedness == .right ? .systemOrange : .white
             let joints = hand.visibleJoints(minimumConfidence: minimumConfidence)
@@ -99,7 +112,7 @@ final class PreviewView: NSView {
             }
             let tips: [(HandJoint, String)] = [(.thumbTip, "Thumb"), (.indexTip, "Index"),
                                                (.middleTip, "Middle"), (.ringTip, "Ring"), (.littleTip, "Little")]
-            for (joint, name) in tips {
+            for (joint, name) in tips where showFingerLabels {
                 if let landmark = joints[joint] {
                     addLabel(name, at: layerPoint(landmark.point), color: color, width: 70)
                 }

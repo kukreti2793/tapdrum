@@ -8,7 +8,7 @@ Camera data will be processed locally. Physical contact recognition and musical
 latency are research questions, not demonstrated capabilities.
 
 **Status: Milestone 1 — camera/hand-tracking prototype implemented; native Mac
-build and hardware acceptance pending.** Ten shared-logic tests pass on Linux.
+build and hardware acceptance pending.** Sixteen shared-logic tests pass on Linux.
 Strike recognition, MIDI and sound are later milestones. The native macOS
 specification supersedes an earlier browser drum-pad suggestion.
 

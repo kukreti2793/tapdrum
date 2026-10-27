@@ -78,8 +78,11 @@ choices collapsed to the first advertised native format. The default prefers
 Use landscape orientation with the preview upright. Arbitrary phone rotation
 during capture is outside this first prototype; stop/reposition/restart if needed.
 Mirror affects the preview, not the unmirrored Vision input or anatomical labels.
-The overlay uses AVFoundation's preview coordinate conversion to account for
-letterboxing/mirroring. Verify alignment on your real camera; this is untested.
+The overlay now projects lower-left Vision coordinates into the actual preview
+image rectangle with explicit letterbox/mirror handling. This corrects the vertical
+reflection found in the first reviewed trial; validate the updated alignment on
+your real camera. The cutoff defaults to 0.72 and is remembered across launches.
+Finger names can be hidden for clarity without reducing analysis/capture rate.
 
 For iPhone: use a stable mount, lock it with the rear camera unobstructed, check
 Continuity Camera prerequisites, and connect the original data cable/trust the

@@ -31,10 +31,12 @@ At the beginning of each session:
 - The owner prefers cloud development and manually runs specific commands on
   the Mac, sharing results here. Do not suggest local Codex, terminal-agent
   access, Xcode agent connections or remote Mac access unless the owner asks again.
-- Owner reports a live M1 trial, prefers its fixed camera angle, and used overlay
-  confidence 0.72. The supplied .mov exceeded the 32 MiB transfer limit and was
-  not viewed. Obtain a smaller clip before diagnosing angle-specific accuracy or
-  claiming acceptance. Reviewing that explicit upload does not enable app recording.
+- A replacement 30-second trial was reviewed: iPhone 720p/30, fixed oblique angle,
+  cutoff 0.72. Read docs/TRIAL_2026_10_27.md. Vertical overlay reflection is patched
+  with explicit lower-left preview projection; native correction needs retesting.
+  Owner prioritizes accuracy/frame rate/latency over CPU reduction: keep 720p/30;
+  do not reduce quality, throttle inference or smooth away motion without evidence.
+  User-supplied clip review does not enable app recording.
 
 ## Engineering and evidence
 
