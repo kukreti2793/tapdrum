@@ -23,10 +23,14 @@ At the beginning of each session:
   target-Mac tracking acceptance. Ask about significant architectural changes.
 - Owner reports a 2020 M1 MacBook Pro, 8 GB, macOS 26.5.2, Logic Pro 10.7.2,
   Xcode 26.6, and iPhone 17 Pro on iOS 26.6.2 with an original data cable.
-  Installation/SDK and native compatibility still need verification on the Mac.
-  Linux checks cannot establish musical latency or working Logic integration.
+  Owner's first build log confirms Xcode 26.6 build 17F113, Apple Swift 6.3.3 and
+  macOS 26.5 SDK; compilation failed on an unsupported capture preset, now patched
+  in source. Await a native rebuild; camera/Logic/latency are still unverified.
 - Use the existing checkout. Cloud tasks are isolated; do not create a worktree
   unless the owner explicitly requests one.
+- The owner prefers cloud development and manually runs specific commands on
+  the Mac, sharing results here. Do not suggest local Codex, terminal-agent
+  access, Xcode agent connections or remote Mac access unless the owner asks again.
 
 ## Engineering and evidence
 

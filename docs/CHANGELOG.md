@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased — 2026-10-27 — first Mac compiler fix
+
+- Removed the macOS-unavailable `inputPriority` capture preset exposed by the
+  owner's first Xcode 26.6/Swift 6.3.3 build; keep direct camera format/rate setup.
+- Made shutdown completion explicitly main-actor/Sendable across model and
+  pipeline, with main-queue delivery at a single boundary.
+- Re-ran ten Core tests successfully and checked native syntax plus the isolated
+  callback contract under strict concurrency; native rebuild remains pending.
+- Recorded the owner's manual Mac-command/pasted-output workflow preference,
+  compiler evidence, known defects, retry instructions and acceptance boundary.
+
 ## Unreleased — 2026-10-27 — Milestone 1 prototype source
 
 - Recorded owner approval for M1, retaining camera-only/no-recordings and later

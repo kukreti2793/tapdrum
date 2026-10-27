@@ -2,8 +2,31 @@
 
 Updated: 2026-10-27. Active milestone: **1 — camera and hand tracking**.
 Owner approved proceeding (“approved. go ahead”). Capture/tracking prototype
-source and shared tests are implemented. **Native build and target-Mac acceptance
-are pending**. No strikes, MIDI, sound engine, plugin or microphone is implemented.
+source and shared tests are implemented. **The owner's first native build failed;
+the source fix awaits a Mac rebuild.** Tracking acceptance is pending. No strikes,
+MIDI, sound engine, plugin or microphone is implemented.
+
+## First Mac build diagnosis and correction
+
+The owner prefers to continue here without granting a local agent terminal/Xcode
+access. Supply small, specific commands for the owner to run and diagnose the
+returned text output. Do not suggest connecting local Codex again unless asked.
+
+The pasted `run-macos.command` output confirms Xcode 26.6 build 17F113, Apple Swift
+6.3.3 and MacOSX26.5 SDK with an arm64 target. Compilation failed before tests or
+app launch: `.inputPriority` is unavailable on macOS. Repeated diagnostics are
+the same two source references, not eight independent defects. A separate warning
+flagged the unannotated shutdown completion's transfer to the main queue.
+
+Removed the unavailable preset and kept device `activeFormat`/frame-duration
+configuration within the existing session transaction. Shutdown completions are
+now `@MainActor @Sendable` end-to-end, dispatched once to the main queue after
+capture stops. No warning suppression, framework changes or tool reinstall.
+
+Native source parsing and an isolated strict-concurrency callback type-check
+pass in cloud; full native compilation still needs the owner to pull this branch
+with `git pull --ff-only` and rerun `./scripts/run-macos.command`. Do not claim the
+reported compiler error is resolved on the Mac until that rebuild is supplied.
 
 ## Current implementation and next task
 
@@ -78,9 +101,10 @@ for narrow Milestone 1 implementation. See `DECISIONS.md` for owner constraints.
 
 ## Remaining native validation
 
-1. Remaining setup: camera mount/angle and native Xcode installation/active SDK
-   verification. Do not repeat answered version/cable questions. Audio configuration
-   can follow for M4.
+1. Remaining setup: camera mount/angle and a successful native rebuild after the
+   first compiler failure. Xcode/compiler/SDK are now evidenced by the owner's
+   log; do not repeat answered version/cable questions. Audio configuration can
+   follow for M4.
 2. Inspect the selected SDK/native tool activation; official Apple API research is
    complete for this proposal. Google guide access is still blocked, but its
    primary API/license sources were read; no MediaPipe deployment is selected.

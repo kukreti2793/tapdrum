@@ -23,6 +23,8 @@ rejected. Do not turn a recommendation into an approved architectural decision.
 | D-016 | 2026-10-27 | Implementation choice | SwiftPM with tools 5.9/Swift 5 language mode, macOS 14 deployment floor for dedicated Continuity discovery; local app packaging/ad-hoc signing script, no external dependencies. Tested support still requires owner's Mac |
 | D-017 | 2026-10-27 | Implementation choice | Single serial session/inference queue with late-frame discard, per-run delegate tokens, display throttled to 10 Hz, 250 ms freshness test evaluated on a 250 ms UI timer; no cross-frame identity guarantee |
 | D-018 | 2026-10-27 | Validation boundary | Signed official Swift 6.0.3 Linux toolchain runs shared Core XCTest tests; Mac sources syntax-parsed only. No native build/hardware acceptance or paid hosted macOS CI assumed |
+| D-019 | 2026-10-27 | Owner preference | Continue cloud development with owner-run Mac commands and pasted results. Do not propose local Codex/terminal-agent/Xcode-agent access again unless requested |
+| D-020 | 2026-10-27 | Corrective implementation | First Mac compiler log shows inputPriority is unavailable on macOS. Remove the preset references, retain direct device format/frame-duration configuration, and make shutdown completion main-actor/sendable end-to-end; native rebuild pending |
 
 Milestone 1 implementation is authorized. Target-Mac acceptance and approval to
 advance beyond tracking remain required. No milestone acceptance is inferred from

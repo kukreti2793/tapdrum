@@ -2,7 +2,7 @@
 
 Status: owner approved the proposed Milestone 1 direction on 2026-10-27. Capture,
 Vision adapter, preview and numerical/resource diagnostics are implemented in
-source. Native build and hardware behavior are **unverified**. All strike/MIDI/
+source. Successful native build and hardware behavior are **unverified**. All strike/MIDI/
 plugin paths below remain future designs. See [DECISIONS.md](DECISIONS.md).
 
 ## Actual source layout
@@ -33,6 +33,14 @@ thread is responsive. This is a display policy, not a real-time latency guarante
 Camera switching is explicit Stop→select→Start. Only landscape with zero output
 rotation is supported initially; rotate/reposition only between runs. Automatic
 cross-frame identity association, calibration and all musical output are absent.
+
+The first Mac build exposed an unsupported preset reference: `.inputPriority`
+is not a macOS API. Capture now sets device `activeFormat` and min/max frame
+durations inside `beginConfiguration`/`commitConfiguration`, without setting
+that preset. See [Apple's activeFormat documentation](https://developer.apple.com/documentation/avfoundation/avcapturedevice/activeformat)
+and the owner-supplied SDK diagnostic in `TEST_RESULTS.md`. A native rebuild is
+pending. Stop completions explicitly carry `@MainActor @Sendable` and are
+dispatched to the main queue by the pipeline after stop and state publication.
 
 Native behavior, coordinate alignment, Vision API type-checking, privacy prompts,
 resource calls and local signing need the owner's Mac; Linux Core tests cannot

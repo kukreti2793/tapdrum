@@ -3,6 +3,37 @@
 Date: 2026-10-27. Current scope: approved Milestone 1 source implementation;
 native Mac acceptance pending. Historical M0 research evidence is retained below.
 
+## First owner-run Mac build — failed; source correction awaiting retry
+
+The owner supplied the output from `./scripts/run-macos.command` on the M1 Mac.
+It reports Xcode 26.6 build 17F113, Apple Swift 6.3.3
+(`swiftlang-6.3.3.1.3 clang-2100.1.1.101`), an arm64 macOS target and
+`MacOSX26.5.sdk`. This is owner-provided execution evidence, not a cloud-native run.
+
+- **Failed:** compilation during `swift test` stopped because
+  `AVCaptureSession.Preset.inputPriority` is explicitly unavailable on macOS.
+  Eight repeated error messages refer to the same two preset references.
+- **Warning:** a non-Sendable shutdown completion was converted to the main
+  queue's actor-isolated Sendable block; this warning was repeated four times.
+- The final `error: fatalError` is the build failure summary. No Core test counts,
+  Release build, app launch, signing or camera validation completed in this log.
+- **Source corrected:** removed the preset guard/assignment; retained direct
+  `activeFormat`/frame durations. Shutdown completion is explicitly
+  `@MainActor @Sendable` through both layers and dispatched once at the pipeline
+  boundary. Apple documentation and the pasted SDK header confirm the platform
+  mismatch; no checks were disabled or warnings suppressed.
+- **Cloud regression:** all ten existing Core XCTest cases passed (0 failed/
+  skipped), all eight native source files syntax-parse, and an isolated GCD
+  callback handoff type-check passed with `-swift-version 5
+  -strict-concurrency=complete -warnings-as-errors` under Swift 6.0.3. The latter
+  verifies only the callback contract, not AppKit/AVFoundation or the full app.
+- **Unrun:** owner Mac rebuild after this patch. The compiler error/warning are
+  addressed in source but their removal on Apple Swift 6.3.3 is not yet confirmed.
+
+Next: update the existing feature checkout with `git pull --ff-only` and rerun
+`./scripts/run-macos.command`. No new clone, tool reinstall, cache deletion or
+local agent access is required. Raw user build logs/home paths are not committed.
+
 ## Milestone 1 — executed validation
 
 | Check | Outcome | Evidence / boundary |
@@ -17,7 +48,7 @@ native Mac acceptance pending. Historical M0 research evidence is retained below
 | Installer repeatability on current cache | Passed | Helper reverified release fingerprint, reused installed toolchain and ran all ten tests; no fresh restored instance tested |
 | Swift cache setup | Initial setup failure resolved | Default compiler cache pointed outside writable roots. Supported cache/module/config/security paths moved to cloud scratch; tests then built and passed without changing HOME |
 | Reusable environment config | start_skill saved; installer draft rejected | Full installer/start draft received `ASB rejected the draft request`, no detailed reason and no save. Subsequent retained-toolchain startup-only draft saved successfully; no install_script or publication claim |
-| Native compile/capture/preview | **Unrun — Mac required** | App target deliberately excluded from Linux package; no xcodebuild or macOS SDK here |
+| Native compile/capture/preview | **Owner compile failed; patched-source rebuild pending** | Failure and SDK details above. Linux still excludes the app target; app launch/camera tests remain unrun |
 | Tracking quality/resource values | **Unmeasured** | Preview alignment, chirality/mirroring, permissions/reconnection, Vision throughput, Mach CPU/footprint calls, thermal/pressure and soak tests require owner checklist |
 | M1 Git review delivery | Draft PR #2 opened | Feature branch pushed; stacked on unmerged M0 branch for focused review. No merge or accepted milestone tag; source/doc commits remain reviewable |
 

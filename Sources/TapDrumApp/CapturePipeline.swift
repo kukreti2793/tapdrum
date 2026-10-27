@@ -66,13 +66,13 @@ final class CapturePipeline: NSObject {
         }
     }
 
-    func stop(generation: Int, completion: (() -> Void)? = nil) {
+    func stop(generation: Int, completion: (@MainActor @Sendable () -> Void)? = nil) {
         queue.async {
             self.generation = generation
             self.stopSession()
             self.phase = .stopped
             self.publish(force: true)
-            completion?()
+            if let completion { DispatchQueue.main.async(execute: completion) }
         }
     }
 
@@ -101,10 +101,8 @@ final class CapturePipeline: NSObject {
         defer { session.commitConfiguration() }
         session.inputs.forEach { session.removeInput($0) }
         session.outputs.forEach { session.removeOutput($0) }
-        guard session.canSetSessionPreset(.inputPriority) else {
-            throw CaptureError.message("The camera does not support explicit capture formats.")
-        }
-        session.sessionPreset = .inputPriority
+        // On macOS configure activeFormat/frame durations directly. The
+        // inputPriority session preset is unavailable in the macOS SDK.
         let input = try AVCaptureDeviceInput(device: device)
         guard session.canAddInput(input) else { throw CaptureError.message("The camera input could not be added.") }
         session.addInput(input)

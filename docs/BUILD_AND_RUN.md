@@ -1,8 +1,27 @@
 # Build and run the Milestone 1 prototype
 
-Status: implemented source; native macOS build, launch and camera tests **not yet
-executed in this Linux workspace**. This guide is a concrete first-run procedure,
-not evidence that the Mac app has passed. No prebuilt release is available.
+Status: implemented source; the first owner-run Mac build failed on an unsupported
+capture preset. Corrected source awaits native rebuild. Launch/camera tests remain
+unrun. Linux checks are not evidence the Mac app has passed; no prebuilt release.
+
+## Continuing after the first compile error
+
+The owner shares build output here and runs only the specific commands needed;
+local agent/terminal access is not required. The initial `.inputPriority` compiler
+error came from a macOS-unavailable capture preset in our code. Its source fix
+removes the preset and preserves direct camera-format configuration. The shutdown
+completion warning is also addressed with explicit actor/sendability annotations.
+After that fix is pushed, update the existing feature checkout and retry:
+
+```sh
+git pull --ff-only
+./scripts/run-macos.command
+```
+
+Run these inside `tapdrum-m1`. A fast-forward failure should be reported without
+resetting local changes. No re-clone, dependency reinstall or cache deletion is
+required for this source correction. Successful native compilation is still
+unconfirmed; return the next result before testing live camera behavior.
 
 ## On the owner's Mac
 

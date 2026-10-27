@@ -96,16 +96,14 @@ final class CameraModel: ObservableObject {
         }
     }
 
-    func stop(completion: (() -> Void)? = nil) {
+    func stop(completion: (@MainActor @Sendable () -> Void)? = nil) {
         generation += 1 // Ignore queued observations and permission replies from the old run.
         hands = []
         lastFrameHostTime = nil
         startedHostTime = nil
         framesAreStale = false
         phase = .stopping
-        pipeline.stop(generation: generation) {
-            if let completion { DispatchQueue.main.async(execute: completion) }
-        }
+        pipeline.stop(generation: generation, completion: completion)
     }
 
     func openCameraSettings() {
