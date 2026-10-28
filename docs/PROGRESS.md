@@ -40,6 +40,12 @@ issues, profile enabled operation, then score held-out contacts and negatives.
 If contact/hover fails, review feasibility before MIDI. No merge/tag authorized.
 Environment publication remains unconfirmed; no environment config changed here.
 
+Delivery: implementation checkpoint `f59e0ea` pushed; draft
+[PR #4](https://github.com/kukreti2793/tapdrum/pull/4) is open against
+`feat/fixed-angle-calibration` for a focused diff. Retarget after approved
+prerequisite merges; do not merge into that feature branch. Remote main remains
+`e60421f`; no merge, force push, deletion or tag performed.
+
 ## Historical resume verification — 2026-10-28
 
 The owner requested “Resume TapDrum,” lifting the pause below. The retained
@@ -82,7 +88,7 @@ source correction, the owner now reports a live M1 trial. **The clip is now revi
 tracking acceptance remains pending a native correction retest.**
 No strikes, MIDI, sound engine, plugin or microphone is implemented.
 
-## Current branch and native retest
+## Historical calibration branch and native retest request
 
 `feat/fixed-angle-calibration` builds on M1 correction commit `296ac82` and adds
 session-only four-corner area selection, convex validation, forward/inverse
@@ -110,7 +116,7 @@ Future strike classification must consume every accepted tracker result with its
 source/host timestamps before the 10 Hz UI publisher; displayed snapshots are
 insufficient for rapid drumming. This branch adds no analysis-frame skipping.
 
-## Current trial review — accessible recording inspected
+## Historical trial review — accessible recording inspected
 
 Read [TRIAL_2026_10_27.md](TRIAL_2026_10_27.md) for the sampled evidence and exact
 rolling diagnostics. The replacement 29.8 MB clip was inspected at 0, 3, …, 30 s,
@@ -159,7 +165,7 @@ that failure, but its recording has not been inspected and the tested commit/
 build output is unknown. Do not claim the exact compiler diagnostics, all native
 tests, or signing/permissions were independently verified from that report alone.
 
-## Current implementation and next task
+## Historical M1 implementation and next task
 
 - Branch: `feat/milestone-1-hand-tracking`, based on the unmerged M0 documentation
   branch. Keep M1 review separate; do not merge either PR without owner approval.

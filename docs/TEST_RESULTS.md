@@ -27,6 +27,9 @@ New native recognition acceptance pending. Historical evidence is retained below
   latency, MIDI receiver or Logic tests. Synthetic event counts are not accuracy.
 - Baseline remains 720p/30 with raw Vision output unchanged; no inference throttle,
   smoothing, new dependency, microphone, recording or sound output introduced.
+- **Delivery verified:** implementation `f59e0ea` pushed on
+  `feat/strike-recognition-experiment`; draft PR #4 OPEN/isDraft=true, base
+  `feat/fixed-angle-calibration`. Remote main remains `e60421f`; no merge/tag.
 
 ## Owner-reported native geometry check — 2026-10-28
 
@@ -51,7 +54,7 @@ Native geometry prerequisite is satisfied for the bounded recognition experiment
 - Environment publication remains unconfirmed; running the retained toolchain
   does not establish a fresh installation or a published snapshot.
 
-## Current calibration branch validation
+## Historical calibration branch validation — before owner retest
 
 - **25 Core XCTest cases passed, 0 failed, 0 skipped:** original 10, six preview
   projection tests and nine playing-area geometry/state tests. The latter cover
