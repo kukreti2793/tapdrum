@@ -1,7 +1,20 @@
 # Test and research results
 
-Date: 2026-10-27. Current scope: approved Milestone 1 source implementation;
+Updated: 2026-10-28. Current scope: M1 correction and M2 playing-area foundation;
 native Mac acceptance pending. Historical M0 research evidence is retained below.
+
+## Resume verification — 2026-10-28
+
+- **Passed:** all 25 existing Core XCTest cases, zero failures/skips, rerun on
+  checkpoint `6ffa08e` with the retained Swift 6.0.3 Linux toolchain and writable
+  caches. No dependency download or application source change was needed.
+- **Verified:** local branch `feat/fixed-angle-calibration` matched its GitHub
+  remote checkpoint; working tree was clean before the resume documentation.
+- **Pending:** owner results for updated native build, overlay registration,
+  four-corner clicks, both hands, mirror/resize and calibration invalidation.
+  No new camera, strike, MIDI, Logic or physical latency test was performed.
+- Environment publication remains unconfirmed; running the retained toolchain
+  does not establish a fresh installation or a published snapshot.
 
 ## Current calibration branch validation
 

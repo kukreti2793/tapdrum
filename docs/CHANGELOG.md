@@ -1,5 +1,12 @@
 # Changelog
 
+## Resumed — 2026-10-28
+
+- Verified the saved calibration branch against GitHub and reran all 25 Core
+  tests successfully using the retained cloud toolchain.
+- Recorded the native alignment/area checks still needed before strike work;
+  no application source, capture quality or privacy setting changed.
+
 ## Checkpoint — 2026-10-28
 
 - Recorded positive owner feedback and pause for user-controlled save/publication.

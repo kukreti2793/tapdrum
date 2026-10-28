@@ -1,8 +1,23 @@
 # Project progress and handoff
 
-Updated: 2026-10-28. Paused checkpoint: **M1 correction + M2 playing-area foundation**.
+Updated: 2026-10-28. Resumed checkpoint: **M1 correction + M2 playing-area foundation**.
 
-## Owner pause / next-session handoff
+## Resume verification — 2026-10-28
+
+The owner requested “Resume TapDrum,” lifting the pause below. The retained
+checkout is on `feat/fixed-angle-calibration` at checkpoint `6ffa08e`, matching
+GitHub, with a clean working tree before this documentation update. The retained
+Swift 6.0.3 Linux toolchain runs successfully: all 25 Core XCTest cases pass again
+with zero failures/skips. This verifies the current retained workspace, not a
+fresh cloud installation or successful environment publication.
+
+No application source changed. Native overlay/area acceptance is still pending;
+the owner has been asked whether the latest branch was tested. Next: obtain the
+Mac alignment, four-click, mirror/resize and reset results in CALIBRATION.md,
+correct any failures, then proceed to per-contact recognition. Existing camera,
+privacy, performance and MIDI gates remain in force.
+
+## Historical owner pause / next-session handoff
 
 The owner responded “looks great!” and is saving/publishing the environment before
 resuming later. Record this as positive qualitative feedback, not a completed
