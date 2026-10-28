@@ -31,7 +31,10 @@ rejected. Do not turn a recommendation into an approved architectural decision.
 | D-024 | 2026-10-27 | Authorized bounded calibration step | Owner explicitly requested necessary accuracy corrections/calibrations and further progress after M1 trial. Implement four-corner projected playing area with perspective mapping/reset, while M1 projection retest remains open. This is M2 foundation, not acceptance of contact recognition or permission to skip gates into MIDI |
 | D-025 | 2026-10-27 | Calibration contract | Store four image references in memory for one capture run. Reset on capture changes/stalls; retain through mirror/resize; manual reset after camera movement. No raw histories, footage, model additions, physical height/contact claims or musical output |
 | D-026 | 2026-10-28 | Owner pause | Positive “looks great!” feedback; owner will save/publish and resume later. Stop implementation at this checkpoint. Next is remaining native checks followed by M2 rest/release and strike feasibility; do not infer exhaustive test acceptance, publication success or merge approval |
+| D-027 | 2026-10-28 | Owner native check | Owner reports calibration build/open, aligned markers, stable both hands, correct area, mirror/resize and Stop clearing passed; FPS clarified 30, CPU 39.6%, PTS age 48.1 ms with percentile unspecified. Satisfies geometry prerequisite for planned M2 experiment, not exhaustive tracking/soak or contact acceptance |
+| D-028 | 2026-10-28 | Bounded recognition design | Streaming session-only rest/lift references, fixed confidence 0.72, wrist-relative normalized finger motion/absolute palm proxy, per-contact approach/reversal and credible rearm. Run every accepted tracker frame before 10 Hz UI; preserve 720p/30. Unknown/stale timing pauses; run/area changes clear state. Counts/latest 32 numerical events only, no raw trajectories or files |
+| D-029 | 2026-10-28 | Owner scope correction | TapDrum is MIDI-only and must not create sounds. Logic records editable MIDI on a software instrument track, uses any compatible chosen drum plugin, then bounces audio stems. Earlier M5 custom AU/sampler removed; no custom sound engine is authorized |
 
-M1 fixes and the bounded playing-area step are authorized. Target-Mac alignment,
-area interaction and then strike feasibility need evidence before advancing.
-No milestone acceptance is inferred from implementation authorization.
+M1 geometry checks passed per owner; bounded M2 motion recognition is the active
+experiment. Strike feasibility still needs independent labeled evidence before
+MIDI. No full milestone acceptance is inferred from implementation authorization.

@@ -1,27 +1,33 @@
 # Product specification
 
-Status: owner requirements captured; M1 implementation approved and tracking source
-written. Native build, tracking acceptance and compatibility remain unverified.
-Date: 2026-10-27. Working name: **TapDrum**. “VisionDrum” in the supplied workflow
+Status: owner reports native overlay/area checks passed; M2 motion experiment
+implemented in source, awaiting native validation and contact/hover scoring.
+Updated: 2026-10-28. Working name: **TapDrum**. “VisionDrum” in the supplied workflow
 is treated as a descriptive placeholder; final product naming is undecided.
 
 ## Purpose and user experience
 
-Create a local, camera-based percussion controller and eventually an instrument
-for Apple Logic Pro. The musician plays an ordinary tabletop using both hands,
+Create a local, camera-based **MIDI-only percussion controller** for Apple Logic
+Pro. Owner scope correction on 2026-10-28 supersedes the earlier custom sound
+instrument requirement: TapDrum does not synthesize or play drum audio and will
+not include a sampler/custom AU instrument. The musician plays an ordinary tabletop using both hands,
 individual fingers, and palm/base contacts. It must feel like percussion rather
 than a gesture-driven computer interface.
 
 The intended workflow is: open Logic Pro and the companion app; choose a built-in
 or compatible iPhone camera; position it to see both hands and the table;
 calibrate; assign notes and sensitivity; choose a MIDI route and drum kit; play;
-record editable MIDI; edit notes, velocities, and timing in Logic; then bounce
-audio using Logic. The app must explain tracking or calibration problems clearly.
+record editable MIDI on a Logic software instrument track; choose any compatible
+drum plugin there; edit notes, velocities, and timing in Logic; then bounce its
+audio to stems using Logic. A stem is rendered audio, not the editable MIDI track.
+The app must explain tracking or calibration problems clearly.
 
 Owner reports a 2020 M1 MacBook Pro with 8 GB unified memory, macOS 26.5.2, and
 iPhone 17 Pro 512 GB. The owner subsequently supplied Logic Pro 10.7.2, Xcode
 26.6, iOS 26.6.2 and an original iPhone data cable. Xcode installation/active SDK,
-actual Continuity operation, and camera mounting remain to be checked. These
+full compatibility and mount stability remain to be checked. A running Continuity
+trial was reviewed; the owner subsequently reports a successful corrected native
+build/overlay/area check. These
 reports are not independently verified compatibility evidence. Apple Silicon is
 the initial target; no wider support is promised.
 
@@ -37,8 +43,8 @@ the initial target; no wider support is promised.
   support, and simultaneous contacts where feasible.
 - Configurable MIDI notes, channel, velocity/sensitivity, reliable note lifetimes,
   activity diagnostics, and saved presets for twelve hand/contact combinations.
-- An existing Logic drum instrument is the first sound engine. A separate native
-  Audio Unit/sample player is a later, gated milestone.
+- The user's chosen Logic drum plugin is the sole sound engine. TapDrum sends
+  MIDI only; recording/editing and audio-stem bouncing happen inside Logic.
 - UI for capture, overlays, calibration, mapping, routing, presets, errors, and
   timing/resource diagnostics. Function takes priority over visual complexity.
 
@@ -66,7 +72,7 @@ dependency. The owner selected **camera-only first; no recordings** for the
 initial work; no microphone experiments or diagnostic recordings are authorized.
 
 End-to-end median ≤30 ms and p95 ≤50 ms are aspirations. Report actual camera,
-recognition, MIDI, and audible-output timing even when targets fail. No performance
+recognition, MIDI, and audible-output timing even when targets fail. No end-to-end latency
 or strike-accuracy measurements exist yet.
 
 No cloud inference, footage transmission, or recording by default. Any diagnostic
@@ -74,7 +80,9 @@ recording must be explicit, local, bounded, and deletable. Never place heavy wor
 on a real-time audio thread. Keep resource usage compatible with an 8 GB Mac
 running Logic; demonstrate this with measurements rather than model claims.
 
-Do not build the complete application at once. Milestone 0 recommendations were
-reviewed and the owner explicitly approved M1. Only tracking is implemented now;
-its native acceptance is pending. Each later milestone needs acceptance evidence
-and owner approval to advance. See [the implementation plan](IMPLEMENTATION_PLAN.md).
+Build incrementally. Tracking and image-area checks passed in the owner's limited
+native report; broader fault/soak/quantitative tracking tests remain open. M2
+rest/lift references and estimated motion events are implemented experimentally,
+with no native recognition or physical-contact accuracy claim. MIDI is still
+unimplemented and gated by recognition evidence. See
+[the implementation plan](IMPLEMENTATION_PLAN.md).

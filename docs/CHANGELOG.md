@@ -1,5 +1,18 @@
 # Changelog
 
+## Unreleased — 2026-10-28 — camera-only motion experiment
+
+- Recorded owner-passed native overlay/area checks and clarified 30 fps reading.
+- Added twelve contact reference slots, streaming stability checks, timestamped
+  approach/reversal detectors, credible rearm/duplicate suppression and bounded
+  event counts/log UI on the full-rate processing path.
+- Added 23 passing synthetic tests (48 total); fixed cooldown/release interaction
+  exposed by a 45-repeat regression. New native recognition tests remain pending.
+- Documented live no-recording evaluation and limitations; retain 720p/30.
+- Applied owner scope correction: MIDI-only TapDrum, chosen Logic drum plugin
+  supplies sounds, editable MIDI recording and audio-stem bouncing inside Logic.
+  Removed custom sampler/AU milestone. No MIDI/audio implemented yet.
+
 ## Resumed — 2026-10-28
 
 - Verified the saved calibration branch against GitHub and reran all 25 Core

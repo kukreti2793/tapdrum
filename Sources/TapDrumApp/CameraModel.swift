@@ -37,6 +37,11 @@ final class CameraModel: ObservableObject {
     @Published private(set) var framesAreStale = false
     @Published private(set) var playingArea = PlayingAreaCalibration()
     @Published private(set) var calibrationMessage = "Start the camera, then mark your playing area."
+    @Published var selectedStrikeHand: Handedness = .right
+    @Published var selectedStrikeContact: DrumContact = .index
+    @Published private(set) var strikes = StrikeReadout()
+    @Published private(set) var recognitionMS = RollingSamples()
+    private var recognitionRevision = 0
 
     private var generation = 0
     private var lastFrameHostTime: Double?
@@ -58,6 +63,29 @@ final class CameraModel: ObservableObject {
     var selectedCamera: CameraDescriptor? { cameras.first { $0.id == selectedCameraID } }
     var selectedMode: CameraMode? { selectedCamera?.modes.first { $0.id == selectedModeID } }
     var canConfigure: Bool { !phase.isRunning && !phase.isBusy }
+    var selectedStrikeKey: ContactKey { ContactKey(hand: selectedStrikeHand, contact: selectedStrikeContact) }
+
+    func learnStrikeReference(lifted: Bool) {
+        guard phase.isRunning, !framesAreStale, playingArea.area != nil else { return }
+        pipeline.learnReference(key: selectedStrikeKey, lifted: lifted,
+                                revision: recognitionRevision, generation: generation)
+    }
+
+    func toggleStrikeDetection() {
+        guard phase.isRunning, !framesAreStale else { return }
+        pipeline.controlStrikes(enabled: !strikes.enabled, revision: recognitionRevision, generation: generation)
+    }
+
+    func clearStrikeEvents() {
+        pipeline.controlStrikes(enabled: nil, clearEvents: true, revision: recognitionRevision, generation: generation)
+    }
+
+    private func syncStrikeArea() {
+        recognitionRevision += 1
+        strikes = StrikeReadout()
+        recognitionMS = RollingSamples()
+        pipeline.configureStrikes(area: playingArea.area, revision: recognitionRevision, generation: generation)
+    }
 
     init() {
         if UserDefaults.standard.object(forKey: "overlayMinimumConfidence") != nil {
@@ -88,6 +116,7 @@ final class CameraModel: ObservableObject {
     func beginPlayingArea() {
         guard phase.isRunning, !framesAreStale else { return }
         playingArea.begin()
+        syncStrikeArea()
         calibrationMessage = "Click corner 1 of 4 in the preview, going around the tabletop area."
     }
 
@@ -99,7 +128,9 @@ final class CameraModel: ObservableObject {
         }
         switch playingArea.select(point) {
         case .cornerAccepted(let count): calibrationMessage = "Click corner \(count + 1) of 4, continuing around the area."
-        case .ready: calibrationMessage = "Playing area set for this capture run."
+        case .ready:
+            calibrationMessage = "Playing area set for this capture run."
+            syncStrikeArea()
         case .invalidPolygon: calibrationMessage = "Corners must form a non-crossed area. Try all four again in order."
         case .ignored: break
         }
@@ -107,6 +138,7 @@ final class CameraModel: ObservableObject {
 
     func resetPlayingArea() {
         playingArea.reset()
+        syncStrikeArea()
         calibrationMessage = "Playing area cleared. Mark it again at the fixed camera angle."
     }
 
@@ -124,6 +156,7 @@ final class CameraModel: ObservableObject {
     private func invalidatePlayingArea(_ reason: String) {
         guard playingArea.area != nil || playingArea.isSelecting || !playingArea.draft.isEmpty else { return }
         playingArea.reset()
+        syncStrikeArea()
         calibrationMessage = reason
     }
 
@@ -198,6 +231,13 @@ final class CameraModel: ObservableObject {
             !FrameFreshness.isFresh(frameHostTime: $0, now: HostTime.seconds)
         } ?? false)
         hands = phase.isRunning && !framesAreStale ? snapshot.hands : []
+        if snapshot.recognitionRevision == recognitionRevision {
+            strikes = snapshot.strikes
+            recognitionMS = snapshot.recognitionMS
+            if phase.isRunning, playingArea.area != nil, !strikes.areaAvailable {
+                invalidatePlayingArea("Recognition detected a frame gap. Set the playing area and references again.")
+            }
+        }
         if !phase.isRunning || framesAreStale {
             invalidatePlayingArea("Capture changed or stalled. Mark the playing area again when video is live.")
         }

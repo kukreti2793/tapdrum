@@ -1,9 +1,44 @@
 # Test and research results
 
-Updated: 2026-10-28. Current scope: M1 correction and M2 playing-area foundation;
-native Mac acceptance pending. Historical M0 research evidence is retained below.
+Updated: 2026-10-28. Current scope: M2 camera-only motion feasibility.
+New native recognition acceptance pending. Historical evidence is retained below.
 
-## Resume verification — 2026-10-28
+## Current recognition experiment validation — 2026-10-28
+
+- **48 Core XCTest cases passed, zero failed/skipped:** existing 25 + nine
+  `StrikeDetectorTests` + fourteen `StrikeExperimentTests`. Synthetic cases cover
+  rest/hover/lift, approach/reversal, bounded confirmation, repeat/refractory,
+  confidence/identity/pose loss and reacquisition, invalid/old/gapped clocks,
+  all twelve reference slots, noisy/tiny separation, oblique motion, region and
+  perpendicular-motion rejection, simultaneous contacts with stable ordering,
+  palm proxy, pause/clear semantics, calibration versions and bounded events.
+- **Regression found and fixed:** initial repeat test emitted 23 of 45 synthetic
+  taps: cooldown gating discarded the first released sample. Release observation
+  now starts immediately while arming still waits for both stable release and
+  refractory completion. The 45-hit test passes, with 32-event memory cap. The
+  first failed run also exposed an unsafe test force-unwrap after a failed count;
+  the test now uses XCTUnwrap and reports a failure instead of crashing.
+- **Passed:** Core type-check with Swift 5 mode, strict concurrency complete,
+  warnings as errors; native files syntax-parse only. Linux has no Apple SDK.
+- **Passed:** Bash syntax for build/run scripts, camera-only plist inspection,
+  all 21 Markdown files and 52 local links, and Git diff whitespace checks.
+- **Unrun:** updated native build/UI interactions, camera-derived precision/recall,
+  contact/hover discrimination, rapid/chord accuracy, resource overhead, physical
+  latency, MIDI receiver or Logic tests. Synthetic event counts are not accuracy.
+- Baseline remains 720p/30 with raw Vision output unchanged; no inference throttle,
+  smoothing, new dependency, microphone, recording or sound output introduced.
+
+## Owner-reported native geometry check — 2026-10-28
+
+Following the calibration branch run instructions, owner reports build/open,
+hand alignment, stable both hands, four corners/grid, mirror/resize and area
+clearing on Stop all passed. FPS clarified as **30**, not 330; CPU **39.6%** of one
+core; PTS age **48.1 ms**, percentile not specified; memory not observed. Exact
+commit/build output was not supplied. These are manual spot checks, not an
+independent quantitative two-hand/occlusion/soak or contact-to-audio measurement.
+Native geometry prerequisite is satisfied for the bounded recognition experiment.
+
+## Historical resume verification — 2026-10-28
 
 - **Passed:** all 25 existing Core XCTest cases, zero failures/skips, rerun on
   checkpoint `6ffa08e` with the retained Swift 6.0.3 Linux toolchain and writable

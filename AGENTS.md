@@ -15,19 +15,23 @@ At the beginning of each session:
 
 ## Current scope and approval
 
-- The owner approved M1 on 2026-10-27. The later request to analyze/correct/calibrate and proceed
-  authorizes the bounded **M1 projection fix + M2 playing-area foundation**.
-- Active branch `feat/fixed-angle-calibration` adds session-only four-corner
-  playing-area geometry on the M1 correction; see docs/CALIBRATION.md. Full M1
-  acceptance remains pending. Verify corrected native alignment/area selection
-  before strike-engine work; no MIDI, sampler, plugin, microphone or recording.
-  Do not skip acceptance gates; ask about significant architectural changes.
+- Active branch `feat/strike-recognition-experiment`: **M2 motion feasibility**.
+  Owner reported native build/aligned markers/stable both hands/area/mirror/resize/
+  Stop clearing passed on 2026-10-28, permitting the planned rest/lift/strike
+  experiment. This is not exhaustive tracking acceptance or strike accuracy.
+  Read docs/STRIKE_EXPERIMENT.md. Updated recognition build/hardware tests remain
+  pending. Do not advance to MIDI before recognition validation or merge PRs.
+- Owner scope correction 2026-10-28: TapDrum is **MIDI-only**, no sounds/sampler/
+  custom AU instrument. Later Logic records editable MIDI on a software instrument
+  track; the user's drum plugin supplies audio and Logic bounces stems. Old M5
+  instrument plan is superseded, not approved for implementation.
 - Owner reports a 2020 M1 MacBook Pro, 8 GB, macOS 26.5.2, Logic Pro 10.7.2,
   Xcode 26.6, and iPhone 17 Pro on iOS 26.6.2 with an original data cable.
   Owner's first build log confirms Xcode 26.6 build 17F113, Apple Swift 6.3.3 and
   macOS 26.5 SDK; compilation failed on an unsupported capture preset, now patched
   in source. Original camera runtime is now visible in the reviewed trial; updated
-  projection/calibration, Logic integration and physical latency are unverified.
+  projection/area checks now passed per owner; new recognition, Logic integration
+  and physical latency remain unverified.
 - Use the existing checkout. Cloud tasks are isolated; do not create a worktree
   unless the owner explicitly requests one.
 - The owner prefers cloud development and manually runs specific commands on
@@ -35,7 +39,7 @@ At the beginning of each session:
   access, Xcode agent connections or remote Mac access unless the owner asks again.
 - A replacement 30-second trial was reviewed: iPhone 720p/30, fixed oblique angle,
   cutoff 0.72. Read docs/TRIAL_2026_10_27.md. Vertical overlay reflection is patched
-  with explicit lower-left preview projection; native correction needs retesting.
+  with explicit lower-left preview projection; owner reports native alignment fixed.
   Owner prioritizes accuracy/frame rate/latency over CPU reduction: keep 720p/30;
   do not reduce quality, throttle inference or smooth away motion without evidence.
   User-supplied clip review does not enable app recording.

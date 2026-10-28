@@ -1,10 +1,12 @@
 # Requirements and traceability
 
-M1 source implements camera controls/preview, Vision observations, palm proxy,
-confidence and numerical/resource diagnostics for CAM/VIS/UX/PERF/PRIV subsets.
-Twenty-five shared Core tests pass on the calibration branch; **native requirements
-are not accepted yet**. Image-area calibration is partially implemented; per-contact
-rest/release, strikes, MIDI, presets, DAW and AU remain unimplemented. Acceptance
+M1 camera/overlay/area spot checks passed per owner on 2026-10-28; exhaustive
+tracking/fault/soak acceptance remains open. M2 rest/lift references and estimated
+motion events are implemented experimentally, with 48 passing Core tests; **native
+recognition and contact/hover accuracy remain unverified**. MIDI, presets and DAW
+integration remain unimplemented. Owner scope correction: MIDI-only TapDrum;
+Logic's chosen compatible drum plugin supplies all sound. Custom AU/sampler
+requirements below are superseded, not outstanding deliverables. Acceptance
 references in [TEST_PLAN.md](TEST_PLAN.md) are plans, not hardware passing results.
 
 | ID | Required behavior | Milestone | Acceptance evidence |
@@ -26,8 +28,8 @@ references in [TEST_PLAN.md](TEST_PLAN.md) are plans, not hardware passing resul
 | PRE-01 | Versioned preset save/load, validation, safe failure on corrupt data | 3 | P1 round-trip and failure tests |
 | DAW-01 | Standalone CoreMIDI route to existing Logic instrument; record editable notes/velocities/timing | 4 | L1 manual recording and playback |
 | DAW-02 | Bounce recorded performance to an audio track/file in Logic | 4 | L1 audible bounce evidence |
-| AU-01 | Later compatible native instrument, polyphonic sample playback, kit/sample assignment, level and velocity control | 5 | A1 AU validation and host session tests |
-| AU-02 | Host-safe lifecycle, state/preset restore, packaging/signing and installation | 5–6 | A1, release matrix |
+| AU-01 | Superseded: custom native sound instrument removed by owner on 2026-10-28 | Removed | MIDI-only scope; chosen Logic drum plugin produces sound |
+| AU-02 | Superseded plugin lifecycle; standalone app packaging/signing/installation still required | 6 | Standalone release matrix; no custom AU validation needed |
 | UX-01 | Preview/landmarks, calibration, mapping, routing, presets, MIDI/confidence/latency diagnostics and actionable errors | 1–6 | Milestone-specific manual tasks |
 | PERF-01 | Measure capture→tracking→strike→MIDI→audible audio, median/p95, misses, false triggers and long-run stability | 1–6 | T1 and resource protocol |
 | PRIV-01 | Local inference; no footage retention/transmission by default; explicit microphone and recording consent | All | D1 data-flow review and consent tests |
