@@ -1,5 +1,29 @@
 # Changelog
 
+## Resumed — 2026-10-28
+
+- Verified the saved calibration branch against GitHub and reran all 25 Core
+  tests successfully using the retained cloud toolchain.
+- Recorded the native alignment/area checks still needed before strike work;
+  no application source, capture quality or privacy setting changed.
+
+## Checkpoint — 2026-10-28
+
+- Recorded positive owner feedback and pause for user-controlled save/publication.
+- Saved resume instructions and next M2 rest/release/strike-recognition work;
+  no application change, new validation, merge or publication performed.
+
+## Unreleased — 2026-10-27 — guided playing-area foundation
+
+- Added session-only four-corner area selection, convex geometry validation,
+  bidirectional perspective mapping, preview guides and projected fingertip counts.
+- Reset area on capture/mode/device/stall changes; preserve through mirror/resize;
+  make manual reset after camera movement explicit. No height/contact inference.
+- Added nine passing geometry/state tests (25 Core total) and the native retest
+  guide. Native updated build/click/render paths still need the owner's Mac.
+- Preserve baseline 720p/30, frame analysis and raw confidence; no resolution
+  shortcut, smoothing, model/download, recording, microphone or musical output.
+
 ## Unreleased — 2026-10-27 — reviewed trial and preview correction
 
 - Reviewed the accessible 30-second trial; recorded one-hand iPhone 720p/30

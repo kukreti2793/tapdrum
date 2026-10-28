@@ -30,11 +30,12 @@ Xcode installation/first launch with its active command-line tools. Owner report
 Xcode 26.6 on macOS 26.5.2. The package uses Swift tools 5.9 and Swift 5 language
 mode; no third-party packages, ML model downloads or sample libraries are needed.
 
-Use the `feat/milestone-1-hand-tracking` branch. If you do not already have a local
+Use the `feat/fixed-angle-calibration` branch for the corrected overlay and guided
+area setup; M1-only work remains on its original branch. If you do not have a local
 checkout, these commands create a **new** directory; do not overwrite existing work:
 
 ```sh
-git clone --branch feat/milestone-1-hand-tracking https://github.com/kukreti2793/tapdrum.git tapdrum-m1
+git clone --branch feat/fixed-angle-calibration https://github.com/kukreti2793/tapdrum.git tapdrum-m1
 cd tapdrum-m1
 ./scripts/run-macos.command
 ```
@@ -134,5 +135,12 @@ toolchain occupy about 3.3 GB in cloud scratch. This toolchain is not part of th
 Mac app and does not provide Apple SDKs. A Linux `swift test` run cannot type-check
 the native target. Syntax-only parsing is recorded separately in test results.
 
-Complete [the live checklist](MILESTONE_1_CHECKLIST.md) before accepting Milestone
-1 or requesting Milestone 2. No camera/audio recordings are needed or authorized.
+Complete [the live checklist](MILESTONE_1_CHECKLIST.md) before claiming tracking
+acceptance. The provided trial clip was explicitly shared for review; the app
+still has no recording feature and no automatic recording is authorized.
+
+For the newly authorized playing-area foundation, follow
+[CALIBRATION.md](CALIBRATION.md). This branch runs 25 Core tests (the M1-only
+branch runs 16). The corrected projection and area interaction still need native
+validation, and 720p/30 remains the baseline. No FPS cap, smoothing or reduced
+resolution is enabled as a CPU optimization.

@@ -1,7 +1,42 @@
 # Test and research results
 
-Date: 2026-10-27. Current scope: approved Milestone 1 source implementation;
+Updated: 2026-10-28. Current scope: M1 correction and M2 playing-area foundation;
 native Mac acceptance pending. Historical M0 research evidence is retained below.
+
+## Resume verification — 2026-10-28
+
+- **Passed:** all 25 existing Core XCTest cases, zero failures/skips, rerun on
+  checkpoint `6ffa08e` with the retained Swift 6.0.3 Linux toolchain and writable
+  caches. No dependency download or application source change was needed.
+- **Verified:** local branch `feat/fixed-angle-calibration` matched its GitHub
+  remote checkpoint; working tree was clean before the resume documentation.
+- **Pending:** owner results for updated native build, overlay registration,
+  four-corner clicks, both hands, mirror/resize and calibration invalidation.
+  No new camera, strike, MIDI, Logic or physical latency test was performed.
+- Environment publication remains unconfirmed; running the retained toolchain
+  does not establish a fresh installation or a published snapshot.
+
+## Current calibration branch validation
+
+- **25 Core XCTest cases passed, 0 failed, 0 skipped:** original 10, six preview
+  projection tests and nine playing-area geometry/state tests. The latter cover
+  affine/perspective mappings, 25 grid round-trips, both windings, outside points,
+  invalid contours, four-click completion/retry/reset and mirrored letterboxed
+  click recovery. These are deterministic geometry tests, not labeled vision tests.
+- Mac sources syntax-parse. Actual updated Mac build, AppKit image-rectangle
+  projection, clicks/guide rendering, mirror/resize and lifecycle invalidation
+  remain **unrun**. No raw camera data, model, external package or audio dependency
+  added. No resolution/FPS/inference-rate/smoothing change made.
+- Calibration is session-only projected 2D geometry. No height, physical contact,
+  strike precision/recall, force/velocity, MIDI or audible latency is validated.
+
+Next owner procedure is [CALIBRATION.md](CALIBRATION.md). Do not promote the
+successful original runtime or these Core tests to native acceptance of new code.
+
+Calibration branch pushed and draft PR #3 opened against the M1 branch. No merge
+or tested milestone tag made. Cloud startup instructions for the retained verified
+toolchain and 25 tests were saved and persistence confirmed; no publication/new
+restored-task validation or fresh install is claimed.
 
 ## Replacement trial reviewed; preview correction awaiting native retest
 
@@ -20,7 +55,7 @@ confidence rewriting, resolution reduction or inference throttling. All 16 curre
 Core XCTest cases passed with 0 failures/skips. No footage or
 extracted images committed. Earlier transfer failure below is historical.
 
-## Owner-reported M1 trial — recording review blocked
+## Historical first upload — recording review was blocked
 
 The owner reports running a trial with overlay confidence 0.72 and prefers to keep
 the camera at the angle shown in a supplied screen recording. The user requests
@@ -44,7 +79,7 @@ preview, overlay and diagnostics, ideally showing both rest and movement. A few
 screenshots can support static alignment review but cannot establish temporal
 tracking quality. Do not commit supplied footage or enable a recording feature.
 
-## First owner-run Mac build — failed; source correction awaiting retry
+## Historical first Mac build — failed before the later running trial
 
 The owner supplied the output from `./scripts/run-macos.command` on the M1 Mac.
 It reports Xcode 26.6 build 17F113, Apple Swift 6.3.3
@@ -75,7 +110,7 @@ Next: update the existing feature checkout with `git pull --ff-only` and rerun
 `./scripts/run-macos.command`. No new clone, tool reinstall, cache deletion or
 local agent access is required. Raw user build logs/home paths are not committed.
 
-## Milestone 1 — executed validation
+## Historical initial M1 validation — before projection/calibration updates
 
 | Check | Outcome | Evidence / boundary |
 | --- | --- | --- |

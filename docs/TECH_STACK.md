@@ -23,12 +23,12 @@ camera, images, two-hand workload, and held-out labels before changing backends.
 | --- | --- | --- |
 | Native application | SwiftPM, Swift tools 5.9/Swift 5 mode, SwiftUI/AppKit, macOS 14 deployment floor | Owner reports Xcode 26.6; official table lists macOS 26.2–26.x host, macOS 26.5 SDK, Swift 6.3 compiler. Native build/install remains unverified |
 | Camera | AVFoundation capture and discovery, runtime format enumeration | Continuity baseline macOS 13+/iOS 16+/iPhone XR+; dedicated continuityCamera device type macOS 14+. Wired/wireless latency must be measured. No universal frame-rate/resolution guarantee |
-| Calibration/math | Small native module using standard math facilities | Homography only for on-plane coordinates; depth/reversal require separate evidence |
+| Calibration/math | Core convex-quadrilateral validation and bidirectional homography with session-only selection state | Image positions only; no metric plane, depth/contact, per-contact rest/release or motion classification. Native interaction pending |
 | Strike classification | Small temporal state machines and bounded histories | Optical-flow or audio fusion only after labeled comparison |
 | MIDI | CoreMIDI virtual source, optional selected destination | Official docs verify source publication via MIDIReceivedEventList and destination send via MIDISendEventList, with host-clock timestamps. MIDI 1.0 semantics first; SDK/receiver tests still required. IAC is diagnostic fallback |
 | Initial sounds | Existing Logic drum instrument | Kit note maps/voice behavior must be checked; no sample licensing/downloads now |
 | Persistence | Versioned validated local settings/presets | Exact storage format and migration policy at Milestone 3 |
-| Tests | XCTest for dependency-free shared Core; ten tests passed with verified Swift 6.0.3 Linux toolchain | Native app syntax parsed only. No real-camera replay/recording fixtures; current privacy choice is no recordings. Mac integration runner still required |
+| Tests | XCTest: 25 cases pass on calibration branch (original 10 + 6 projection + 9 area geometry/state) under verified Swift 6.0.3 Linux | Mac source syntax parsed only. Owner trial reviewed qualitatively; updated native UI/geometry still needs validation. No automatic recording/replay feature |
 | Packaging | Local `.app` bundle/ad-hoc signing procedure implemented in build script | Script has only syntax/platform-guard checks in Linux. Native build/signing/TCC unverified. No sandbox/notarized distribution claim |
 | Custom instrument | Compare AUv2 and AUv3 at Milestone 5 | AUv2 has a long macOS host history; AUv3 has extension lifecycle constraints. Neither is selected or implemented; host compatibility needs actual tests |
 

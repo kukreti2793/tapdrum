@@ -9,7 +9,7 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .firstTextBaseline) {
                 Text("TapDrum").font(.largeTitle.bold())
-                Text("Milestone 1 · Hand tracking").foregroundStyle(.secondary)
+                Text("Tracking · Playing area").foregroundStyle(.secondary)
                 Spacer()
                 Label("Camera only · No recordings", systemImage: "lock.shield")
             }
@@ -19,7 +19,8 @@ struct ContentView: View {
                     ZStack {
                         CameraPreview(session: model.session, hands: model.hands,
                                       mirrored: model.mirrorPreview, minimumConfidence: model.minimumConfidence,
-                                      showFingerLabels: model.showFingerLabels)
+                                      showFingerLabels: model.showFingerLabels, playingArea: model.playingArea,
+                                      onCalibrationPoint: model.selectPlayingAreaPoint)
                         if !model.phase.isRunning || model.framesAreStale {
                             Text(model.framesAreStale ? "No recent frames · landmarks cleared" : "Press Start camera to begin")
                                 .padding().background(.black.opacity(0.8)).foregroundStyle(.white).clipShape(RoundedRectangle(cornerRadius: 8))
@@ -92,6 +93,8 @@ struct ContentView: View {
                 }.font(.caption)
             }
             Divider()
+            playingAreaControls
+            Divider()
             Text("Frame diagnostics").font(.headline)
             metric("Analyzed fps", model.diagnostics.deliveredFPS)
             Text("Received / analyzed: \(model.diagnostics.received) / \(model.diagnostics.analyzed)")
@@ -119,6 +122,24 @@ struct ContentView: View {
 
     private func metric(_ label: String, _ value: Double?) -> some View {
         HStack { Text(label); Spacer(); Text(number(value)).monospacedDigit() }
+    }
+
+    private var playingAreaControls: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Playing area").font(.headline)
+            HStack {
+                Button(model.playingArea.isSelecting ? "Start over" : "Set area", action: model.beginPlayingArea)
+                    .disabled(!model.phase.isRunning || model.framesAreStale)
+                Button("Reset", action: model.resetPlayingArea)
+                    .disabled(model.playingArea.area == nil && !model.playingArea.isSelecting)
+            }
+            Text(model.calibrationMessage).font(.caption)
+            if model.playingArea.area != nil {
+                Text("\(model.projectedFingertipCount) fingertip estimates project inside the area.").font(.caption)
+            }
+            Text("Image positions only; contact and height are not measured. Reset after any camera movement. Area is cleared on stop, mode changes or video stalls.")
+                .font(.caption2).foregroundStyle(.secondary)
+        }
     }
 
     private func number(_ value: Double?, digits: Int = 1) -> String {
