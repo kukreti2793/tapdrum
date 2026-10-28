@@ -57,6 +57,9 @@ struct PipelineSnapshot: Sendable {
     let diagnostics: FrameDiagnostics
     let lastFrameHostTime: Double?
     let trackingError: String?
+    let recognitionRevision: Int
+    let strikes: StrikeReadout
+    let recognitionMS: RollingSamples
 }
 
 enum HostTime {

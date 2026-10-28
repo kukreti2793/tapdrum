@@ -1,8 +1,10 @@
 # Fixed-angle playing-area calibration prototype
 
-Status: source implemented with tested geometry; native interaction/alignment
-retest is pending. This is the first bounded Milestone 2 foundation requested
-after the owner's trial. It does not complete strike recognition or M1 acceptance.
+Status: owner reports native build, overlay alignment, both hands, corner/grid,
+mirror/resize and Stop clearing passed on 2026-10-28. Broader tracking/soak tests
+remain open. The instructions below describe the area-only branch (25 Core tests).
+For the active rest/lift and motion experiment (48 tests), use
+[STRIKE_EXPERIMENT.md](STRIKE_EXPERIMENT.md). Neither establishes physical contact.
 
 ## Run this version
 
@@ -65,9 +67,9 @@ The numerical tolerances in geometry validation are not strike sensitivity.
 - Camera movement during live capture is **not automatically detected**. Press
   **Reset** and mark the region again after moving the camera, phone, crop or
   framing/effects. A fixed mount is an assumption, not a measured guarantee.
-- No resting/raised-finger reference, per-contact temporal state machine, contact
-  classifier, MIDI assignment, sampler, recording or plugin is implemented here.
-  Those follow after corrected alignment and area selection are validated.
+- The area-only branch has no rest/lift or temporal state machine. Those are now
+  experimental on `feat/strike-recognition-experiment`; MIDI is still future.
+  TapDrum generates no sounds and includes no sampler/custom sound plugin.
 
 ## Next owner feedback
 

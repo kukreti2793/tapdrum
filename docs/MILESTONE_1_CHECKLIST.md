@@ -1,8 +1,10 @@
 # Milestone 1 — owner-assisted native acceptance
 
-Status: **not executed**. Approval to implement has been received; acceptance and
-permission to advance have not. This is camera-only with no recordings, no
-microphone, no MIDI, and no contact detection. Please send observations/numbers
+Status: **partially executed per owner** on 2026-10-28: build/open, hand alignment,
+both hands, four-corner/grid, mirror/resize and Stop clearing passed. Broader
+fault/occlusion/scored tracking/soak checks below remain open. Planned M2 motion
+experiment may proceed, without claiming full tracking/contact acceptance.
+This checklist is camera-only with no recordings, microphone or MIDI. Send observations/numbers
 and errors as text. Do not save video/audio or raw landmark trajectories.
 
 Update: the owner supplied an explicit trial clip, reviewed in

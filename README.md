@@ -1,22 +1,25 @@
 # TapDrum
 
-Camera-based virtual percussion instrument for Logic Pro.
+Camera-based MIDI percussion controller for Logic Pro.
 
 The intended product lets a musician tap an ordinary tabletop with fingers and
 palms, sending editable MIDI performances to a Logic Pro drum instrument.
 Camera data will be processed locally. Physical contact recognition and musical
 latency are research questions, not demonstrated capabilities.
 
-**Status: reviewed tracking trial; overlay correction and guided playing-area
-calibration implemented in source, native retest pending.** Twenty-five shared
-Core tests pass on Linux. The initial app is visibly running in the owner trial.
-Strike recognition, MIDI and sound are later milestones. The native macOS
+**Status: owner reports native overlay/area checks passed; M2 camera-only motion
+experiment implemented in source, awaiting native recognition tests.** Forty-eight
+Core tests pass on Linux. TapDrum will generate MIDI only; Logic records editable
+MIDI and the user's selected drum plugin supplies all sound and audio stems.
+MIDI is not implemented yet. No TapDrum sampler/custom sound plugin is planned.
+The native macOS
 specification supersedes an earlier browser drum-pad suggestion.
 
 ## Try the tracking prototype on your Mac
 
-See [the Mac build/run guide](docs/BUILD_AND_RUN.md) and
-[the calibration/retest guide](docs/CALIBRATION.md). With this feature branch
+See [the strike experiment guide](docs/STRIKE_EXPERIMENT.md),
+[the Mac build/run guide](docs/BUILD_AND_RUN.md) and
+[the area calibration guide](docs/CALIBRATION.md). With this feature branch
 checked out and Xcode installed, run from the repository directory:
 
 ```sh
@@ -55,8 +58,8 @@ Xcode 26.6, and iPhone 17 Pro on iOS 26.6.2 with an original data cable. No
 macOS/Logic/Xcode version is claimed tested until verified there. The first
 experiment is camera-only, without recordings.
 
-The owner approved M1 and requested corrections/calibration after the trial. The standalone controller is intended to feed an
-existing Logic drum instrument in later milestones. A custom sampler or Audio
-Unit remains deferred until MIDI recording works. The current guided area step
-does not validate physical contact or complete M2. Corrected tracking and region
-interaction need a native retest before strike recognition progresses.
+The owner approved M1, requested necessary calibration/progress and reports the
+native geometry checks passed. The current motion experiment does not validate
+physical contact or complete M2. Recognition must be evaluated before MIDI/Logic
+integration. The owner's MIDI-only correction removes custom sounds/sampler/AU
+from the roadmap; Logic and the chosen drum plugin handle audio.

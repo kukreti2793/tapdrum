@@ -9,7 +9,7 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .firstTextBaseline) {
                 Text("TapDrum").font(.largeTitle.bold())
-                Text("Tracking · Playing area").foregroundStyle(.secondary)
+                Text("Strike experiment").foregroundStyle(.secondary)
                 Spacer()
                 Label("Camera only · No recordings", systemImage: "lock.shield")
             }
@@ -43,7 +43,7 @@ struct ContentView: View {
                     }
                     Text("Use landscape orientation. Green: estimated left hand · Orange: estimated right hand · Dashed circle: palm proxy.")
                         .font(.caption).foregroundStyle(.secondary)
-                    Text("Hand pose does not prove table contact. This prototype does not detect strikes or produce sound.")
+                    Text("Experimental motion events do not prove table contact. Calibrate before testing; MIDI output is a later milestone.")
                         .font(.caption).foregroundStyle(.secondary)
                 }
                 ScrollView { diagnostics }.frame(width: 280)
@@ -95,6 +95,8 @@ struct ContentView: View {
             Divider()
             playingAreaControls
             Divider()
+            strikeControls
+            Divider()
             Text("Frame diagnostics").font(.headline)
             metric("Analyzed fps", model.diagnostics.deliveredFPS)
             Text("Received / analyzed: \(model.diagnostics.received) / \(model.diagnostics.analyzed)")
@@ -102,6 +104,8 @@ struct ContentView: View {
             Text("Vision failures: \(model.diagnostics.failures)")
             metric("Vision p50 (ms)", model.diagnostics.inferenceMS.quantile(0.5))
             metric("Vision p95 (ms)", model.diagnostics.inferenceMS.quantile(0.95))
+            metric("Recognition p50 (ms)", model.recognitionMS.quantile(0.5))
+            metric("Recognition p95 (ms)", model.recognitionMS.quantile(0.95))
             metric("PTS → callback p50 (ms)", model.diagnostics.sourceAgeMS.quantile(0.5))
             metric("PTS → callback p95 (ms)", model.diagnostics.sourceAgeMS.quantile(0.95))
             Text("Rolling 240 samples; nearest-rank quantiles. Frame PTS is clock-converted when available. These are not contact-to-sound measurements.")
@@ -145,5 +149,41 @@ struct ContentView: View {
     private func number(_ value: Double?, digits: Int = 1) -> String {
         guard let value, value.isFinite else { return "—" }
         return value.formatted(.number.precision(.fractionLength(digits)))
+    }
+
+    private var strikeControls: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Strike experiment").font(.headline)
+            Picker("Hand", selection: $model.selectedStrikeHand) {
+                Text("Left").tag(Handedness.left)
+                Text("Right").tag(Handedness.right)
+            }.disabled(model.strikes.collecting)
+            Picker("Contact", selection: $model.selectedStrikeContact) {
+                ForEach(DrumContact.allCases, id: \.self) { Text($0.label).tag($0) }
+            }.disabled(model.strikes.collecting)
+            Text("Hold the contact on the table → Learn rest. Lift it clearly, keeping the wrist still → Learn lifted. Hold each pose for 0.5 s.")
+            HStack {
+                Button("Learn rest") { model.learnStrikeReference(lifted: false) }
+                Button("Learn lifted") { model.learnStrikeReference(lifted: true) }
+                    .disabled(!model.strikes.restKeys.contains(model.selectedStrikeKey))
+            }.disabled(model.playingArea.area == nil || model.strikes.collecting || model.framesAreStale)
+            Text(model.strikes.message).textSelection(.enabled)
+            Text("\(model.strikes.readyKeys.count)/12 contacts calibrated · \(model.strikes.processedFrames) analyzed frames")
+            HStack {
+                Button(model.strikes.enabled ? "Pause detection" : "Enable detection", action: model.toggleStrikeDetection)
+                    .disabled(model.strikes.readyKeys.isEmpty || model.strikes.collecting || model.framesAreStale)
+                Button("Clear counts", action: model.clearStrikeEvents)
+            }
+            Text("Selected: \(model.strikes.states[model.selectedStrikeKey] ?? "Not armed")")
+            metric("Rest 0 → lifted 1", model.strikes.levels[model.selectedStrikeKey])
+            Text("Selected events: \(model.strikes.counts[model.selectedStrikeKey, default: 0]) · Total: \(model.strikes.counts.values.reduce(0, +))")
+                .font(.callout.bold())
+            ForEach(model.strikes.recentEvents.suffix(5).reversed()) { event in
+                Text("#\(event.id) \(event.key.label) · source \(number(event.evidence.candidateSourceTime, digits: 3)) s · confirmed host \(number(event.recognizedHostTime, digits: 3)) s · reversal wait \(number(event.evidence.evidenceDelayMS)) ms")
+                    .font(.caption2).textSelection(.enabled)
+            }
+            Text("Events are camera motion estimates. Near-table hovering can resemble a strike. Palm proxy: lift/lower the whole palm; it is not a measured palm-base contact. Reset area/relearn after camera or hand-position changes. No sound, MIDI, microphone or recording in this experiment.")
+                .font(.caption2).foregroundStyle(.secondary)
+        }
     }
 }

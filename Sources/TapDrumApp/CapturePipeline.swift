@@ -23,6 +23,9 @@ final class CapturePipeline: NSObject {
     private var lastFrameHostTime: Double?
     private var lastPublishTime = -Double.infinity
     private var trackingError: String?
+    private var strikeExperiment = StrikeExperiment()
+    private var recognitionRevision = 0
+    private var recognitionMS = RollingSamples()
 
     init(tracker: HandTracker = VisionHandTracker(),
          onSnapshot: @escaping (PipelineSnapshot) -> Void,
@@ -37,6 +40,35 @@ final class CapturePipeline: NSObject {
     deinit { observers.forEach { NotificationCenter.default.removeObserver($0) } }
 
     func refreshDevices() { queue.async { self.discoverDevices() } }
+
+    // Commands share the capture queue; stale UI commands cannot reconfigure a
+    // newer capture run or revive an invalidated calibration revision.
+    func configureStrikes(area: PlayingArea?, revision: Int, generation: Int) {
+        queue.async {
+            guard generation == self.generation, revision >= self.recognitionRevision else { return }
+            self.recognitionRevision = revision
+            self.strikeExperiment = StrikeExperiment(area: self.phase.isRunning ? area : nil)
+            self.recognitionMS = RollingSamples()
+            self.publish(force: true)
+        }
+    }
+
+    func learnReference(key: ContactKey, lifted: Bool, revision: Int, generation: Int) {
+        queue.async {
+            guard self.phase.isRunning, generation == self.generation, revision == self.recognitionRevision else { return }
+            self.strikeExperiment.beginReference(key: key, lifted: lifted)
+            self.publish(force: true)
+        }
+    }
+
+    func controlStrikes(enabled: Bool?, clearEvents: Bool = false, revision: Int, generation: Int) {
+        queue.async {
+            guard self.phase.isRunning, generation == self.generation, revision == self.recognitionRevision else { return }
+            if let enabled { self.strikeExperiment.setEnabled(enabled) }
+            if clearEvents { self.strikeExperiment.clearEvents() }
+            self.publish(force: true)
+        }
+    }
 
     func start(deviceID: String, mode: CameraMode, generation: Int) {
         queue.async {
@@ -84,6 +116,8 @@ final class CapturePipeline: NSObject {
         hands = []
         lastFrameHostTime = nil
         trackingError = nil
+        strikeExperiment = StrikeExperiment()
+        recognitionMS = RollingSamples()
     }
 
     private func configure(device: AVCaptureDevice, mode: CameraMode) throws {
@@ -184,6 +218,7 @@ final class CapturePipeline: NSObject {
             guard let buffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
                 diagnostics.recordFailure()
                 hands = []
+                strikeExperiment.suspend("Missing image buffer; detection paused.")
                 trackingError = "The camera delivered a sample without an image buffer."
                 publish(force: false)
                 return
@@ -205,6 +240,15 @@ final class CapturePipeline: NSObject {
                 hands = []
                 trackingError = "Vision could not analyze the frame: \(error.localizedDescription)"
             }
+            let recognitionStart = HostTime.seconds
+            if let ageMS, ageMS + (recognitionStart - arrival) * 1000 <= 250 {
+                // Consume every accepted result, including empty/lost-hand frames,
+                // before the 10 Hz UI publisher. No raw trajectory is saved.
+                strikeExperiment.consume(hands: hands, sourceTime: CMTimeGetSeconds(pts), hostTime: recognitionStart)
+            } else if strikeExperiment.readout.areaAvailable {
+                strikeExperiment.suspend("Frame clock unavailable or older than 250 ms; detection paused.")
+            }
+            recognitionMS.append((HostTime.seconds - recognitionStart) * 1000)
             lastFrameHostTime = arrival
             publish(force: false)
         }
@@ -219,7 +263,9 @@ final class CapturePipeline: NSObject {
         guard force || now - lastPublishTime >= 0.1 else { return }
         lastPublishTime = now
         onSnapshot(PipelineSnapshot(generation: generation, phase: phase, hands: hands, diagnostics: diagnostics,
-                                    lastFrameHostTime: lastFrameHostTime, trackingError: trackingError))
+                                    lastFrameHostTime: lastFrameHostTime, trackingError: trackingError,
+                                    recognitionRevision: recognitionRevision, strikes: strikeExperiment.readout,
+                                    recognitionMS: recognitionMS))
     }
 
     private func observeNotifications() {

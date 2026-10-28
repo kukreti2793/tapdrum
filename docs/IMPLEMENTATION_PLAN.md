@@ -1,32 +1,33 @@
 # Milestones and approval gates
 
-Active work: **M1 correction and bounded M2 playing-area foundation**, requested
-by the owner after the trial. The reviewed clip exposes an M1 overlay defect;
-full target-Mac acceptance remains pending. Necessary guided image calibration is
-implemented in parallel as explicitly requested, without claiming tracking gates
-passed. Do not skip validation or advance to MIDI/plugins without approval.
+Active work: **M2 camera-only motion feasibility**, following the owner's report
+that native overlay/area checks passed. Rest/lift references and experimental
+motion recognition are implemented in source; native recognition acceptance is
+pending. Broader M1 fault/soak/quantitative tests remain open. Do not skip
+validation or advance to MIDI without recognition evidence. Owner's 2026-10-28
+scope correction removes custom sounds/sampler/AU from the roadmap: MIDI-only
+TapDrum feeds a Logic software instrument track and the user's chosen drum plugin.
 No delivery dates are promised before feasibility and toolchain checks.
 
 | Milestone | Smallest deliverable | Required acceptance evidence | Exit/approval condition |
 | --- | --- | --- | --- |
 | 0 — Requirements/feasibility | Hardware inventory, comparison, proposed architecture, contact/latency experiments, risks and persistent docs | Documentation/research delivered; owner approved proceeding. Native feasibility still needs experiments | M1 authorized by “approved. go ahead”; no merge implied |
-| 1 — Hand tracking | Camera/observations/diagnostics implemented; reviewed runtime shows reflected overlay, corrected in source | M1 branch: 16 Core tests pass. Updated native projection/two-hand acceptance needs retest; first clip does not establish full accuracy | Native registration fix and C1/V1 remain open; owner explicitly requests necessary calibration progress |
-| 2 — Strike recognition | First bounded step implemented: four-corner session-only projected playing area. Per-contact rest/release and temporal strike engine remain future | Calibration branch: 25 Core tests pass. Native clicks/grid/invalidation and then S1 contact/hover tests pending | Bounded area work authorized by trial request. No M2 acceptance/strike claim; validate alignment/area before further recognition and MIDI |
+| 1 — Hand tracking | Capture/tracking and corrected overlay/area | Owner reports build, aligned landmarks, stable both hands, area/mirror/resize and Stop clearing passed. Broader C1/V1 and soak still open | Native geometry prerequisite satisfied for bounded M2 experiment; no quantitative accuracy or musical-latency claim |
+| 2 — Strike recognition | Session-only area and per-contact rest/lift references; full-frame-rate approach/reversal state machines and bounded event diagnostics | 48 Core tests pass; new native build, live S1 contacts/hover, speed/duplicates and profiling pending | Trial request authorizes necessary calibration/progress. Recognition feasibility must be scored before MIDI; stop for review if contact/hover fails |
 | 3 — MIDI controller | CoreMIDI transport, editable mappings/channel/velocity, note lifecycle, presets and independent receiver diagnostics | M1/P1/R1: receiver-observed events, simultaneous/repeated notes, no stuck owned notes on tested paths, preset failure tests | Independent MIDI verified; owner approves Logic test |
-| 4 — Logic integration | One selected route to existing drum instrument; editable performance and audio bounce | L1 owner-assisted recording/playback/bounce; T1 only with agreed measurement method; disclosed latency/accuracy limits | Recognizable editable pattern and owner acceptance; explicit plugin approval required |
-| 5 — Native instrument | Approved AU architecture, lightweight sample playback, kits/levels, plugin state and companion routing | A1 native AU validation, actual Logic load/restore/MIDI/audio/bounce, packaging checks | Host compatibility and instrument behavior verified before optimization/release |
+| 4 — Logic integration | MIDI recorded on a software instrument track; chosen compatible drum plugin supplies sound; Logic bounces audio stems | L1 owner-assisted recording/playback/bounce; T1 only with agreed measurement method; disclosed latency/accuracy limits | Recognizable editable pattern and owner acceptance; TapDrum generates no audio |
+| 5 — Custom instrument removed | Superseded by owner's explicit MIDI-only instruction on 2026-10-28 | No custom sampler/AU deliverable or test required | Explicit scope change, not a silently skipped milestone |
 | 6 — Optimization/release | Measured improvements, robust calibration/presets/errors, regression suite and release documentation | Held-out S1 regression, T1 under load if authorized, long-run R1, supported OS/Logic/camera/signing matrix | Owner accepts measured limitations and release scope |
 
 ## Current bounded task and next action
 
-The owner's request to correct/calibrate and proceed authorizes the current
-guided playing-area step. Next, run [CALIBRATION.md](CALIBRATION.md) on the Mac:
-verify the corrected overlay, both hands/mirroring/resizing and all four corners,
-then test reset and capture invalidation. Keep the original 720p/30 baseline and
-raw inference timing; do not sacrifice accuracy/frame rate for speculative CPU
-savings. Build per-contact rest/release/temporal recognition only after native
-geometry is reliable. MIDI/AU/audio remain later. Strict frame-level percentages
-and physical latency remain unverified without appropriate independent evidence.
+Next run [STRIKE_EXPERIMENT.md](STRIKE_EXPERIMENT.md) on the Mac. First calibrate
+one index finger, then independently label actual contacts/no-contact reversals
+and inspect counts, duplicates, misses and resource cost. Test other contacts,
+both hands, uncertainty/reacquisition and gaps before held-out S1 scoring. Keep
+720p/30 and raw inference timing; no speculative quality reduction. MIDI remains
+later, all sound belongs to Logic's selected plugin. Frame-level accuracy and
+physical latency remain unverified without independent evidence.
 
 ## Reassessment rules
 

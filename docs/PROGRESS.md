@@ -1,8 +1,52 @@
 # Project progress and handoff
 
-Updated: 2026-10-28. Resumed checkpoint: **M1 correction + M2 playing-area foundation**.
+Updated: 2026-10-28. Active checkpoint: **M2 camera-only motion experiment**.
 
-## Resume verification — 2026-10-28
+## Current task — native geometry passed; recognition experiment ready for Mac
+
+Owner reports build/open passed, hand markers aligned, both hands stable, four
+corners/grid correct, mirror/resize aligned, and area clears on Stop. The reported
+“FPS 330” was clarified as **30 fps**. CPU 39.6% (one core = 100%); PTS age 48.1 ms
+with percentile unspecified; footprint not observed. These are owner-reported
+spot checks, not a quantitative tracking/soak benchmark or physical-latency result.
+They satisfy the native geometry prerequisite for the previously planned M2
+experiment; broader tracking/fault tests remain open.
+
+Branch `feat/strike-recognition-experiment` builds on calibration checkpoint
+`36996b7`. Core now has twelve independent rest/lift reference slots, streaming
+noise/separation validation, pose/confidence gates and timestamped approach/
+reversal detectors. Capture consumes every accepted tracker result before 10 Hz
+UI publication. A new UI offers learning, explicit enable/pause, counts, recent
+event timestamps and recognition CPU/evidence-delay diagnostics. Area/run changes
+clear recognition; uncertainty/gaps require release or recalibration. No raw
+trajectories, files, model downloads, resolution/FPS changes, microphone, MIDI or
+sound engine were added. Read STRIKE_EXPERIMENT.md before continuing.
+
+**48 Core XCTest cases pass** (25 prior + 9 detector + 14 experiment), zero failed/
+skipped; Core strict-concurrency type-check and Mac syntax parse pass. Synthetic
+repeat tests exposed an initial cooldown/release bug, corrected without changing
+the 60 ms refractory requirement. These tests do not establish camera accuracy.
+New native compile/controls, CPU/memory cost, S1 actual-contact vs near-surface
+hover discrimination, timing and rapid/simultaneous behavior remain unrun.
+
+Owner's explicit scope correction: **MIDI only, no TapDrum sounds/sampler/custom
+Audio Unit**. Logic records editable MIDI on a software instrument track, uses the
+chosen compatible drum plugin, then bounces audio stems. Former M5 custom
+instrument removed by owner instruction; it is not an outstanding deliverable.
+
+Next: owner runs the new branch and follows STRIKE_EXPERIMENT.md, starting with
+one index finger's independently labeled taps/negative motions. Fix build/runtime
+issues, profile enabled operation, then score held-out contacts and negatives.
+If contact/hover fails, review feasibility before MIDI. No merge/tag authorized.
+Environment publication remains unconfirmed; no environment config changed here.
+
+Delivery: implementation checkpoint `f59e0ea` pushed; draft
+[PR #4](https://github.com/kukreti2793/tapdrum/pull/4) is open against
+`feat/fixed-angle-calibration` for a focused diff. Retarget after approved
+prerequisite merges; do not merge into that feature branch. Remote main remains
+`e60421f`; no merge, force push, deletion or tag performed.
+
+## Historical resume verification — 2026-10-28
 
 The owner requested “Resume TapDrum,” lifting the pause below. The retained
 checkout is on `feat/fixed-angle-calibration` at checkpoint `6ffa08e`, matching
@@ -44,7 +88,7 @@ source correction, the owner now reports a live M1 trial. **The clip is now revi
 tracking acceptance remains pending a native correction retest.**
 No strikes, MIDI, sound engine, plugin or microphone is implemented.
 
-## Current branch and native retest
+## Historical calibration branch and native retest request
 
 `feat/fixed-angle-calibration` builds on M1 correction commit `296ac82` and adds
 session-only four-corner area selection, convex validation, forward/inverse
@@ -72,7 +116,7 @@ Future strike classification must consume every accepted tracker result with its
 source/host timestamps before the 10 Hz UI publisher; displayed snapshots are
 insufficient for rapid drumming. This branch adds no analysis-frame skipping.
 
-## Current trial review — accessible recording inspected
+## Historical trial review — accessible recording inspected
 
 Read [TRIAL_2026_10_27.md](TRIAL_2026_10_27.md) for the sampled evidence and exact
 rolling diagnostics. The replacement 29.8 MB clip was inspected at 0, 3, …, 30 s,
@@ -121,7 +165,7 @@ that failure, but its recording has not been inspected and the tested commit/
 build output is unknown. Do not claim the exact compiler diagnostics, all native
 tests, or signing/permissions were independently verified from that report alone.
 
-## Current implementation and next task
+## Historical M1 implementation and next task
 
 - Branch: `feat/milestone-1-hand-tracking`, based on the unmerged M0 documentation
   branch. Keep M1 review separate; do not merge either PR without owner approval.

@@ -72,6 +72,12 @@ no strike recognition, MIDI, or musical-latency claim at this milestone.
 
 ## S1 — camera-only strike feasibility (Milestone 2)
 
+Current first-run procedure: [STRIKE_EXPERIMENT.md](STRIKE_EXPERIMENT.md).
+48 deterministic Core tests pass; new native controls/recognition and live
+contact-vs-hover accuracy are unverified. Native geometry spot checks passed per
+owner; broader tracking/fault/soak tasks remain open. First smoke trials do not
+replace the held-out evaluation below. No MIDI advancement from unit tests alone.
+
 Automated tests at this milestone should use synthetic timestamped observations
 to check per-contact state transitions: resting/hovering/lifting rejection,
 approach/reversal, credible release and rearm, duplicate suppression, rate limits,
@@ -201,18 +207,16 @@ and audio portions where independently observable. Do not sum stage percentiles
 as an observed end-to-end percentile. Test built-in/wired/wireless where actually
 available, then repeat under the fixed Logic workload. No winner is assumed.
 
-## D1/A1 — privacy and later instrument/release tests
+## D1 — privacy and standalone release tests
 
 Privacy review: local-only processing; no frame/audio files, telemetry/network
 egress or hidden microphone activation; denied permission/revocation paths and
 explicit controls if recording is separately added later. Do not retain raw
 landmarks in routine test reports.
 
-Milestone 5 only: unit-test sample voices, velocity, polyphony, sample/state loads
-off the render thread, kit/preset persistence and bounded render work. Validate
-with the appropriate Apple AU validator and actual Logic loading, rescan, session
-save/restore, offline bounce, reload and failure paths. AUv3 extension and AUv2
-component behavior require their own tests. Distribution testing includes the
-chosen signing/notarization/installation route on recorded supported versions.
-Milestone 6 adds long-run regression, camera/host faults and resource/latency
-comparisons. No AU or distribution tests are currently runnable.
+The owner removed the custom AU/sampler milestone on 2026-10-28: no sample-voice
+or custom AU validation is required. At M4 test the chosen compatible Logic drum
+plugin's MIDI map, session save/playback and audio bounce using Logic. Standalone
+distribution testing still includes signing/notarization/installation on recorded
+supported versions. Milestone 6 adds long-run regression, camera/host faults and
+resource/latency comparisons. No MIDI/Logic/distribution tests are claimed passed.

@@ -139,8 +139,9 @@ Complete [the live checklist](MILESTONE_1_CHECKLIST.md) before claiming tracking
 acceptance. The provided trial clip was explicitly shared for review; the app
 still has no recording feature and no automatic recording is authorized.
 
-For the newly authorized playing-area foundation, follow
-[CALIBRATION.md](CALIBRATION.md). This branch runs 25 Core tests (the M1-only
-branch runs 16). The corrected projection and area interaction still need native
-validation, and 720p/30 remains the baseline. No FPS cap, smoothing or reduced
-resolution is enabled as a CPU optimization.
+The owner reports calibration build/overlay/area spot checks passed. For the
+current branch `feat/strike-recognition-experiment`, follow
+[STRIKE_EXPERIMENT.md](STRIKE_EXPERIMENT.md); it runs **48 Core tests** before the
+new native build. The historical area-only branch runs 25 and M1-only runs 16.
+Native recognition validation is pending. Keep 720p/30; no FPS cap, smoothing or
+reduced resolution is enabled as a CPU optimization.
